@@ -6,7 +6,7 @@ skinparam style strictuml
 hide empty members
 
 class FirstDoclet
-class Western
+package Western{}
 class Java2Puml
 class PumlDoclet
 class PumlDiagram
