@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="pumlFromJava">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/pumlFromJava/package-search-index.zip!/" />
+      <root url="jar://$PROJECT_DIR$/src/pumlFromJava/type-search-index.zip!/" />
+      <root url="jar://$PROJECT_DIR$/src/pumlFromJava/member-search-index.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
