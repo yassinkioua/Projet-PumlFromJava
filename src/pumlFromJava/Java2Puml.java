@@ -8,7 +8,7 @@ public class Java2Puml
 {
     public static void main(String[] args)
     {
-        String[] argument = {"-private","-sourcepath", "./exemples","-doclet" ,"pumlFromJava.FirstDoclet","-docletpath" ,"","western" } ;
+        String[] argument = {"-private","-sourcepath", "./exemples","-doclet" ,"pumlFromJava.PumlDoclet","-docletpath" ,"","western" } ;
         ToolProvider toolProvider = ToolProvider.findFirst("javadoc").get();
         System.out.println(toolProvider.name());
 
