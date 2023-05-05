@@ -1,8 +1,28 @@
 @startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
 skinparam style strictuml
+hide empty members
 
-class Doclet{
-    
+class Java2Puml
+{
+   +main(String[]:args) : void
 }
+class FirstDoclet
+{
++init(Locale:locale, Reporter:reporter) : void
++getName() : String
++getSupportedOptions() : Set<? extends Option>
++getSupportedSourceVersion() : SourceVersion
++run(DocletEnvironment:environment) : boolean
++ dumpElement(Element:element) : void
+}
+
+package Western{}
+
+Java2Puml " 1\t" --> "\t1" FirstDoclet : appelle à l'aide de javadoc >
+FirstDoclet " 1\t" -> "\t*" Western : récupère les données >
+
 
 @enduml
