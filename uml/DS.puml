@@ -1,0 +1,31 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+skinparam style strictuml
+
+participant Tool 
+participant Doclet
+
+
+[o-> Tool ++ : main(args)
+
+Tool -->> Doclet ++ : <<Create>> Doclet()
+
+
+
+Tool -> Doclet : init(local, reporter)
+
+Tool -> Doclet : getSupportedOptions()
+return Set<Doclet.options> SupportedOptions
+
+Tool -> Doclet++ : getSupportedSourceVersion()
+return  JavaVersionSupported : SourceVersion
+
+Tool -> Doclet++ : run(environment : DocletEnvironment)
+
+alt "run is success"
+    return true
+end
+
+
+@enduml
+
