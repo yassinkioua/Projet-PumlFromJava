@@ -2,28 +2,30 @@
 'https://plantuml.com/sequence-diagram
 skinparam style strictuml
 
-participant MyDoclet.class as DocletC
+participant Tool 
 participant Doclet
 
 
-[o-> DocletC ++ : main(args)
+[o-> Tool ++ : main(args)
 
-DocletC -->> Doclet ++ : <<Create>> Doclet()
-return Doclet = Doclet()
+Tool -->> Doclet ++ : <<Create>> Doclet()
 
 
-DocletC -> Doclet : init(local, reporter)
 
-DocletC -> Doclet++ : getSupportedOptions()
+Tool -> Doclet : init(local, reporter)
+
+Tool -> Doclet : getSupportedOptions()
 return Set<Doclet.options> SupportedOptions
 
-DocletC -> Doclet++ : getSupportedSourceVersion()
+Tool -> Doclet++ : getSupportedSourceVersion()
 return  JavaVersionSupported : SourceVersion
 
-DocletC -> Doclet++ : run(environment : DocletEnvironment)
+Tool -> Doclet++ : run(environment : DocletEnvironment)
 
 alt "run is success"
     return true
 end
+
+
 @enduml
 
