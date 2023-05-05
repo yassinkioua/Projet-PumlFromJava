@@ -1,0 +1,8 @@
+@startuml
+skinparam style strictuml
+
+class Doclet{
+    
+}
+
+@enduml
