@@ -22,6 +22,8 @@ import java.util.Set;
 public class PumlDoclet implements Doclet {
     private String out = null; 
     private String d = null;
+
+
     abstract class Option implements Doclet.Option {
         private final String name;
         private final boolean hasArg;
@@ -61,6 +63,8 @@ public class PumlDoclet implements Doclet {
             return hasArg ? parameters : "";
         }
     }
+
+    
     private final Set<Option> options = Set.of(
             
             new Option("-out", true, "sets the name of the puml file", "<string>") {
@@ -115,6 +119,7 @@ public class PumlDoclet implements Doclet {
         
         ArrayList<String> classNames = new ArrayList<String>();
         ArrayList<Element> classes = new ArrayList<Element>();
+        
         if(d == null){
             d = ".";
         }
@@ -127,18 +132,6 @@ public class PumlDoclet implements Doclet {
         } 
         ArrayList<Element> temp = new ArrayList<Element>();
         
-        for(Element element : classes){
-            // System.out.println(element.getEnclosedElements());
-            // temp.addAll(element.getEnclosedElements());
-            
-            // for (Element e : temp) {
-                //     System.out.println(e);
-                //     System.out.println(e.asType());
-                // }
-                
-            // System.out.println("_____________________");
-            
-        }
         try {
             String filepath = d+"/"+out;
             System.out.println(filepath);
@@ -146,9 +139,28 @@ public class PumlDoclet implements Doclet {
             fw.write("@startuml\n");    
             fw.write("skinparam style strictuml\n");
             
-            for (String s : classNames.get(0).split(",")){
-                fw.write("class " + s + "\n");
-            }
+            
+            
+            for(Element element : classes){
+                fw.write("class " + element.getSimpleName() + "{ \n");
+                // System.out.println(element.getEnclosedElements());
+                    temp.addAll(element.getEnclosedElements());
+                    
+                   
+                    
+                    for (Element e : temp) {
+                        // System.out.println(e);
+                        fw.write(e.toString() + "\n");
+                        // System.out.println(e.asType());
+                        // System.out.println(e.getSimpleName()); donne le nom de la methode sans parenthese et sans les param
+                        // System.out.println(e.getModifiers()); donne les info du genre public ou private et final 
+                    }
+                    fw.write("\n } \n");
+                    temp = new ArrayList<Element>();
+        
+                }
+            
+                
             fw.write("@enduml\n");
             fw.close();
             
