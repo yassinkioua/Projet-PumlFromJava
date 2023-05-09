@@ -1,5 +1,6 @@
 package pumlFromJava;
 
+import java.util.List;
 import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.DocletEnvironment;
 import jdk.javadoc.doclet.Reporter;
@@ -17,7 +18,72 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Set;
 
+
 public class PumlDoclet implements Doclet {
+    private String out = null; 
+    private String d = null;
+
+
+    abstract class Option implements Doclet.Option {
+        private final String name;
+        private final boolean hasArg;
+        private final String description;
+        private final String parameters;
+    
+        Option(String name, boolean hasArg,
+               String description, String parameters) {
+            this.name = name;
+            this.hasArg = hasArg;
+            this.description = description;
+            this.parameters = parameters;
+        }
+    
+        @Override
+        public int getArgumentCount() {
+            return hasArg ? 1 : 0;
+        }
+    
+        @Override
+        public String getDescription() {
+            return description;
+        }
+    
+        @Override
+        public Kind getKind() {
+            return Kind.STANDARD;
+        }
+    
+        @Override
+        public List<String> getNames() {
+            return List.of(name);
+        }
+    
+        @Override
+        public String getParameters() {
+            return hasArg ? parameters : "";
+        }
+    }
+
+    
+    private final Set<Option> options = Set.of(
+            
+            new Option("-out", true, "sets the name of the puml file", "<string>") {
+                @Override
+                public boolean process(String option,
+                                       List<String> arguments) {
+                    out = arguments.get(0);
+                    return true;
+                }
+            },
+            new Option("-d", true,"sets the dir to write the puml in", "<string>"){
+
+                @Override
+                public boolean process(String option, List<String> arguments){
+                    d = arguments.get(0);
+                    return true;
+                }
+            }
+    );
 
     @Override
     public void init(Locale locale, Reporter reporter) {  }
@@ -34,7 +100,7 @@ public class PumlDoclet implements Doclet {
     @Override
     public Set<? extends Option> getSupportedOptions() {
         // This doclet does not support any options.
-        return Collections.emptySet();
+        return options;
     }
 
     @Override
@@ -54,32 +120,47 @@ public class PumlDoclet implements Doclet {
         ArrayList<String> classNames = new ArrayList<String>();
         ArrayList<Element> classes = new ArrayList<Element>();
         
+        if(d == null){
+            d = ".";
+        }
         for (Element element : environment.getSpecifiedElements()) {
+            if(out == null){
+                out = element.getSimpleName().toString() + ".puml";
+            }
             classes.addAll(element.getEnclosedElements());
             classNames.add(element.getEnclosedElements().toString());
         } 
         ArrayList<Element> temp = new ArrayList<Element>();
         
-        for(Element element : classes){
-            // System.out.println(element.getEnclosedElements());
-            // temp.addAll(element.getEnclosedElements());
-            
-            // for (Element e : temp) {
-                //     System.out.println(e);
-                //     System.out.println(e.asType());
-                // }
-                
-            // System.out.println("_____________________");
-            
-        }
         try {
-            FileWriter fw = new FileWriter("PumlDiagramm.puml");
+            String filepath = d+"/"+out;
+            System.out.println(filepath);
+            FileWriter fw = new FileWriter(filepath);
             fw.write("@startuml\n");    
             fw.write("skinparam style strictuml\n");
             
-            for (String s : classNames.get(0).split(",")){
-                fw.write("class " + s + "\n");
-            }
+            
+            
+            for(Element element : classes){
+                fw.write("class " + element.getSimpleName() + "{ \n");
+                // System.out.println(element.getEnclosedElements());
+                    temp.addAll(element.getEnclosedElements());
+                    
+                   
+                    
+                    for (Element e : temp) {
+                        // System.out.println(e);
+                        fw.write(e.toString() + "\n");
+                        // System.out.println(e.asType());
+                        // System.out.println(e.getSimpleName()); donne le nom de la methode sans parenthese et sans les param
+                        // System.out.println(e.getModifiers()); donne les info du genre public ou private et final 
+                    }
+                    fw.write("\n } \n");
+                    temp = new ArrayList<Element>();
+        
+                }
+            
+                
             fw.write("@enduml\n");
             fw.close();
             
@@ -91,7 +172,10 @@ public class PumlDoclet implements Doclet {
         
         
         // System.out.println(classNames);
-        System.out.println(classes);
+        // System.out.println(classes);
+        // System.out.println(environment);
+        System.out.println(out);
+        System.out.println(d);
         return true;
     }
     
