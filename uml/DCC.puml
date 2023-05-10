@@ -7,22 +7,20 @@ hide empty members
 
 class Java2Puml
 {
-   +main(String[]:args) : void
+   +main(args : String[])
 }
-class FirstDoclet
+class PumlDoclet
 {
-+init(Locale:locale, Reporter:reporter) : void
++init(locale : Locale, reporter : Reporter)
 +getName() : String
 +getSupportedOptions() : Set<? extends Option>
 +getSupportedSourceVersion() : SourceVersion
-+run(DocletEnvironment:environment) : boolean
-+ dumpElement(Element:element) : void
++run(environment : DocletEnvironment) : Boolean
++ dumpElement(element : Element)
 }
 
-package Western{}
 
-Java2Puml " 1\t" --> "\t1" FirstDoclet : appelle à l'aide de javadoc >
-FirstDoclet " 1\t" -> "\t*" Western : récupère les données >
+Java2Puml " 1\t" --> "\t1" PumlDoclet : appelle à l'aide de javadoc >
 
 
 @enduml
