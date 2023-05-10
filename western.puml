@@ -1,164 +1,61 @@
 @startuml
 skinparam style strictuml
 class Histoire4{ 
-Histoire4()
-main(java.lang.String[])
 
  } 
 class Genre{ 
-values()
-valueOf(java.lang.String)
-Genre()
-FEMININ
-MASCULIN
 
  } 
 class HorsLaLoi{ 
-estLibre()
-getRecompense()
-kidnapper(western.Dame)
-seFaireCapturer(western.Cowboy)
-seFaireTirerDessus(western.Cowboy)
-getLook()
-getCaptives()
 
  } 
 class Cowboy{ 
-gains
-captures
-Cowboy(java.lang.String)
-Cowboy(java.lang.String,western.Boisson)
-getPseudo()
-liberer(western.Dame)
-liberer(java.util.List<western.Dame>)
-capturer(western.HorsLaLoi)
-tirerSur(western.HorsLaLoi)
-sePresenter()
-boissonParDefaut
-getBoissonParDefaut()
-setBoissonParDefaut(western.Boisson)
+- gains
+- captures
+- {static} boissonParDefaut
 
  } 
 class Nommable{ 
-getNom()
-getPseudo()
 
  } 
 class Ripou{ 
-brigand
-Ripou(java.lang.String)
-Ripou(java.lang.String,western.Boisson)
-Ripou(java.lang.String,western.Boisson,java.lang.String)
-getLook()
-estLibre()
-getRecompense()
-kidnapper(western.Dame)
-getCaptives()
-seFaireCapturer(western.Cowboy)
-seFaireTirerDessus(western.Cowboy)
-getPseudo()
-sePresenter()
-liberer(western.Dame)
+- brigand
 
  } 
 class Dame{ 
-estLibre
-sauveur
-ravisseur
-Dame(java.lang.String)
-Dame(java.lang.String,western.Boisson)
-getPseudo()
-seFaireKidnapper(western.HorsLaLoi)
-seFaireLiberer(western.Cowboy)
-estLibre()
-sePresenter()
-boissonParDefaut
-getBoissonParDefaut()
-setBoissonParDefaut(western.Boisson)
-getRavisseur()
+- estLibre
+- sauveur
+- ravisseur
+- {static} boissonParDefaut
 
  } 
 class Substantif{ 
-nom
-genre
-Substantif(java.lang.String,western.Genre)
-getNom()
-getGenre()
-toString()
-isVowel(char)
-startsWithVowel(java.lang.String)
-getArticleIndefini()
-avecArticleIndefini()
-getArticleDefini(western.Genre)
-getArticleDefini()
-avecArticleDefini()
-faireElision(java.lang.String)
-elision()
-getArticlePartitif()
-avecArticlePartitif()
-avecElision(java.lang.String)
-avecPreposition(java.lang.String)
+- nom
+- genre
 
  } 
 class Narrateur{ 
-Narrateur()
-Narrateur(java.lang.String)
-dire(java.lang.String)
-boire(western.Boisson)
-boire()
-getPseudo()
 
  } 
 class Personnage{ 
-BOISSON_PAR_DEFAUT
-nom
-boisson
-Personnage(java.lang.String)
-Personnage(java.lang.String,western.Boisson)
-dire(java.lang.String)
-sePresenter()
-boire(western.Boisson)
-boire()
-getNom()
-getBoisson()
-getPseudos(java.util.List<? extends western.Nommable>)
-getBoissonParDefaut()
+- {static} BOISSON_PAR_DEFAUT
+- nom
+- boisson
 
  } 
 class Brigand{ 
-LOOK_PAR_DEFAUT
-look
-recompense
-estLibre
-captives
-gardien
-Brigand(java.lang.String)
-Brigand(java.lang.String,western.Boisson)
-Brigand(java.lang.String,western.Boisson,java.lang.String)
-getLook()
-getRecompense()
-estLibre()
-kidnapper(western.Dame)
-seFaireCapturer(western.Cowboy)
-seFaireTirerDessus(western.Cowboy)
-getPseudo()
-getCaptives()
-sePresenter()
-boissonParDefaut
-getBoissonParDefaut()
-setBoissonParDefaut(western.Boisson)
+# {static} LOOK_PAR_DEFAUT
+- look
+- recompense
+- estLibre
+- captives
+- gardien
+- {static} boissonParDefaut
 
  } 
 class Boisson{ 
-substantif
-EAU
-Boisson(java.lang.String,western.Genre)
-getNom()
-getGenre()
-getNomAvecArticleIndefini()
-getNomAvecArticlePartitif()
-getNomAvecArticleDefini()
-getNomAvecPreposition(java.lang.String)
+- final substantif
++ {static} final EAU
 
  } 
 @enduml
