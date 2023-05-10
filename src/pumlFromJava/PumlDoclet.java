@@ -130,52 +130,8 @@ public class PumlDoclet implements Doclet {
             classes.addAll(element.getEnclosedElements());
             classNames.add(element.getEnclosedElements().toString());
         } 
-        ArrayList<Element> temp = new ArrayList<Element>();
-        
-        try {
-            String filepath = d+"/"+out;
-            System.out.println(filepath);
-            FileWriter fw = new FileWriter(filepath);
-            fw.write("@startuml\n");    
-            fw.write("skinparam style strictuml\n");
-            
-            
-            
-            for(Element element : classes){
-                fw.write("class " + element.getSimpleName() + "{ \n");
-                // System.out.println(element.getEnclosedElements());
-                    temp.addAll(element.getEnclosedElements());
-                    
-                   
-                    
-                    for (Element e : temp) {
-                        // System.out.println(e);
-                        fw.write(e.toString() + "\n");
-                        // System.out.println(e.asType());
-                        // System.out.println(e.getSimpleName()); donne le nom de la methode sans parenthese et sans les param
-                        // System.out.println(e.getModifiers()); donne les info du genre public ou private et final 
-                    }
-                    fw.write("\n } \n");
-                    temp = new ArrayList<Element>();
-        
-                }
-            
-                
-            fw.write("@enduml\n");
-            fw.close();
-            
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-            
-            
-        
-        
-        // System.out.println(classNames);
-        // System.out.println(classes);
-        // System.out.println(environment);
-        System.out.println(out);
-        System.out.println(d);
+
+        PumlDiagram.generatePuml(classes, d, out);
         return true;
     }
     
