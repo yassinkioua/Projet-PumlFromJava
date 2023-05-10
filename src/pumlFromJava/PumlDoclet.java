@@ -141,24 +141,24 @@ public class PumlDoclet implements Doclet {
             
             
             
-            for(Element element : classes){
-                fw.write("class " + element.getSimpleName() + "{ \n");
-                // System.out.println(element.getEnclosedElements());
-                    temp.addAll(element.getEnclosedElements());
+            // for(Element element : classes){
+            //     fw.write("class " + element.getSimpleName() + "{ \n");
+            //     // System.out.println(element.getEnclosedElements());
+            //         temp.addAll(element.getEnclosedElements());
                     
                    
                     
-                    for (Element e : temp) {
-                        // System.out.println(e);
-                        fw.write(e.toString() + "\n");
-                        // System.out.println(e.asType());
-                        // System.out.println(e.getSimpleName()); donne le nom de la methode sans parenthese et sans les param
-                        // System.out.println(e.getModifiers()); donne les info du genre public ou private et final 
-                    }
-                    fw.write("\n } \n");
-                    temp = new ArrayList<Element>();
+            //         for (Element e : temp) {
+            //             // System.out.println(e);
+            //             fw.write(e.toString() + "\n");
+            //             // System.out.println(e.asType());
+            //             // System.out.println(e.getSimpleName()); donne le nom de la methode sans parenthese et sans les param
+            //             // System.out.println(e.getModifiers()); donne les info du genre public ou private et final 
+            //         }
+            //         fw.write("\n } \n");
+            //         temp = new ArrayList<Element>();
         
-                }
+            //     }
             
                 
             fw.write("@enduml\n");
@@ -176,6 +176,7 @@ public class PumlDoclet implements Doclet {
         // System.out.println(environment);
         System.out.println(out);
         System.out.println(d);
+        // PumlDiagram.generatePuml(classes, d, out);
         return true;
     }
     
