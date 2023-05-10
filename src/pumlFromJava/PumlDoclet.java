@@ -117,7 +117,7 @@ public class PumlDoclet implements Doclet {
     public boolean run(DocletEnvironment environment) {
         // TODO Auto-generated method stub
         
-        ArrayList<String> classNames = new ArrayList<String>();
+       
         ArrayList<Element> classes = new ArrayList<Element>();
         
         if(d == null){
@@ -128,7 +128,7 @@ public class PumlDoclet implements Doclet {
                 out = element.getSimpleName().toString() + ".puml";
             }
             classes.addAll(element.getEnclosedElements());
-            classNames.add(element.getEnclosedElements().toString());
+            
         } 
 
         PumlDiagram.generatePuml(classes, d, out);
