@@ -1,0 +1,47 @@
+@startuml
+'https://plantuml.com/class-diagram 
+ skinparam classAttributeIconSize 0 
+skinparam classFontStyle Bold
+skinparam style strictuml
+hide empty members
+class Histoire4{ 
+
+ } 
+enum Genre <<enum>> { 
+
+ } 
+interface HorsLaLoi <<interface>> { 
+
+ } 
+class Cowboy{ 
+- gains : int
+
+ } 
+interface Nommable <<interface>> { 
+
+ } 
+class Ripou{ 
+
+ } 
+class Dame{ 
+- estLibre : boolean
+
+ } 
+class Substantif{ 
+
+ } 
+class Narrateur{ 
+
+ } 
+abstract class Personnage{ 
+
+ } 
+class Brigand{ 
+- recompense : int
+- estLibre : boolean
+
+ } 
+class Boisson{ 
+
+ } 
+@enduml

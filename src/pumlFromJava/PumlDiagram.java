@@ -26,7 +26,7 @@ import java.util.Set;
 
 public class PumlDiagram {
 
-    public static void generatePuml(ArrayList<Element> classes, String d, String out) {
+    public static void generatePuml(ArrayList<Element> classes, String d, String out, PumlType UmlType) {
 
         try {
 
@@ -34,26 +34,21 @@ public class PumlDiagram {
 
             FileWriter fw = new FileWriter(filepath);
             fw.write("@startuml\n");
-            fw.write("'https://plantuml.com/class-diagram \nskinparam classAttributeIconSize 0 \nskinparam classFontStyle Bold\nskinparam style strictuml\nhide empty members\n");
-
-            
+            fw.write(
+                    "'https://plantuml.com/class-diagram \n skinparam classAttributeIconSize 0 \nskinparam classFontStyle Bold\nskinparam style strictuml\nhide empty members\n");
 
             ArrayList<Element> temp = new ArrayList<Element>();
 
             for (Element element : classes) {
+
                 processClass(fw, element);
                 temp.addAll(element.getEnclosedElements());
-
-                for (Element e : temp) {
-                    // System.out.println(e);
-                    // fw.write(e.toString() + "\n");
-                    processInsideClass(fw, e);
-                    // System.out.println(e.asType());
-                    // System.out.println(e.getSimpleName()); donne le nom de la methode sans
-                    // parenthese et sans les param
-                    // System.out.println(e.getModifiers()); donne les info du genre public ou
-                    // private et final
-                }
+               
+                    for (Element e : temp) {
+                        processInsideClass(fw, e,UmlType);
+                    }
+               
+            
                 fw.write("\n } \n");
                 temp = new ArrayList<Element>();
 
@@ -66,38 +61,37 @@ public class PumlDiagram {
             // TODO: handle exception
         }
     }
-    static private void processInsideClass(FileWriter fw, Element e) {
+
+    static private void processInsideClass(FileWriter fw, Element e, PumlType umlType) {
         try {
-           
-                if (e.getKind() == ElementKind.FIELD) {
-                    if(e.asType().getKind().isPrimitive()){
-                        handleModifiers(fw,e);
-                        fw.write(e.getSimpleName().toString() +" : "+ e.asType().toString() + "\n");
-                    }
-                } else if (e.getKind() == ElementKind.CONSTRUCTOR) {
-                    handleModifiers(fw,e);
-                    fw.write("<<Create>> " + e.toString() + "\n");
-                }
-                else if (e.getKind() == ElementKind.METHOD) {
-                    handleModifiers(fw,e);
-                    System.out.println(e.asType());
-                    if(e.asType().toString().endsWith("java.lang.String")){
-                        fw.write(e.toString() +" : String \n");
-                    }
-                    else{
-                        ExecutableType execType = (ExecutableType) e.asType();
-                        fw.write(e.toString() +" : "+execType.getReturnType()+ "\n");
-                    }
-                
+
+            if (e.getKind() == ElementKind.FIELD) {
+                if (e.asType().getKind().isPrimitive()) {
+                    handleModifiers(fw, e);
+                    fw.write(e.getSimpleName().toString() + " : " + e.asType().toString() + "\n");
                 }
 
+            } else if (e.getKind() == ElementKind.CONSTRUCTOR && umlType == PumlType.DCC) {
+                handleModifiers(fw, e);
+                fw.write("<<Create>> " + e.toString() + "\n");
+            } else if (e.getKind() == ElementKind.METHOD && umlType == PumlType.DCC) {
+                handleModifiers(fw, e);
+                System.out.println(e.asType());
+                if (e.asType().toString().endsWith("java.lang.String")) {
+                    fw.write(e.toString() + " : String \n");
+                } else {
+                    ExecutableType execType = (ExecutableType) e.asType();
+                    fw.write(e.toString() + " : " + execType.getReturnType() + "\n");
+                }
 
+            }
 
         } catch (Exception x) {
             // TODO: handle exception
         }
     }
-    private static void handleModifiers(FileWriter fw, Element e){
+
+    private static void handleModifiers(FileWriter fw, Element e) {
         try {
             for (Modifier mod : e.getModifiers()) {
                 if (mod == Modifier.PRIVATE) {
@@ -119,8 +113,7 @@ public class PumlDiagram {
                     fw.write("# ");
                 }
             }
-        }
-         catch (Exception x) {
+        } catch (Exception x) {
             // TODO: handle exception
         }
     }
