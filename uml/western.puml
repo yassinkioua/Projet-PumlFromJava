@@ -1,15 +1,15 @@
 @startuml
 skinparam style strictuml
-class western.Histoire4
-class western.Genre
-class western.HorsLaLoi
 class western.Cowboy
-class western.Nommable
-class western.Ripou
-class western.Dame
-class western.Substantif
-class western.Narrateur
-class western.Personnage
 class western.Brigand
+class western.Dame
 class western.Boisson
+class western.Histoire4
+class western.Narrateur
+class western.Ripou
+class western.Substantif
+class western.Genre
+class western.Nommable
+class western.Personnage
+class western.HorsLaLoi
 @enduml
