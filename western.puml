@@ -1,17 +1,21 @@
 @startuml
+'https://plantuml.com/class-diagram 
+skinparam classAttributeIconSize 0 
+skinparam classFontStyle Bold
 skinparam style strictuml
+hide empty members
 class Histoire4{ 
 + <<Create>> Histoire4()
 + {static} main(java.lang.String[])
 
  } 
-class Genre{ 
+enum Genre <<enum>> { 
 + {static} values()
 + {static} valueOf(java.lang.String)
 - <<Create>> Genre()
 
  } 
-class HorsLaLoi{ 
+interface HorsLaLoi <<interface>> { 
 + {abstract} estLibre()
 + {abstract} getRecompense()
 + {abstract} kidnapper(western.Dame)
@@ -37,7 +41,7 @@ class Cowboy{
 + {static} setBoissonParDefaut(western.Boisson)
 
  } 
-class Nommable{ 
+interface Nommable <<interface>> { 
 + {abstract} getNom()
 + {abstract} getPseudo()
 
@@ -107,7 +111,7 @@ class Narrateur{
 + getPseudo()
 
  } 
-class Personnage{ 
+abstract class Personnage{ 
 - {static} BOISSON_PAR_DEFAUT
 - nom
 - boisson
