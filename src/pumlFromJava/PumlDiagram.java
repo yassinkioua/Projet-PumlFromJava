@@ -38,7 +38,9 @@ public class PumlDiagram {
                     "'https://plantuml.com/class-diagram \n skinparam classAttributeIconSize 0 \nskinparam classFontStyle Bold\nskinparam style strictuml\nhide empty members\n");
 
             ArrayList<Element> temp = new ArrayList<Element>();
-
+            if(UmlType == PumlType.DCA){
+                fw.write("package " + classes.get(0).getEnclosingElement().getSimpleName().toString() + "{ \n");
+            }
             for (Element element : classes) {
 
                 processClass(fw, element);
@@ -53,7 +55,9 @@ public class PumlDiagram {
                 temp = new ArrayList<Element>();
 
             }
-
+            if(UmlType == PumlType.DCA){
+                fw.write("}\n");
+            }
             fw.write("@enduml\n");
             fw.close();
 

@@ -4,6 +4,7 @@
 skinparam classFontStyle Bold
 skinparam style strictuml
 hide empty members
+package western{ 
 class Histoire4{ 
 
  } 
@@ -44,4 +45,5 @@ class Brigand{
 class Boisson{ 
 
  } 
+}
 @enduml
