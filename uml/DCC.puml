@@ -19,6 +19,11 @@ class PumlDoclet
 + dumpElement(element : Element)
 }
 
+class PumlDiagram
+{
+    +{static} generatepuml(classes : ArrayList<Element>, d : String
+}
+
 
 Java2Puml " 1\t" --> "\t1" PumlDoclet : appelle à l'aide de javadoc >
 
