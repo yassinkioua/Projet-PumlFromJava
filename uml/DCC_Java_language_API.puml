@@ -1,0 +1,87 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam style strictuml
+hide empty members
+
+interface AnnotatedConstruct <<interface>>
+
+interface Element <<interface>> extends AnnotatedConstruct
+{
++asType() : TypeMirror
++getKind() : ElementKind
++getModifiers() : Set<Modifier>
++getSimpleName() : Name
++getEnclosedElements() : List<? extends Element>
++toString() : String
+}
+
+interface TypeMirror <<interface>> extends AnnotatedConstruct
+{
++getKind() : TypeKind
++toString() : String
+}
+
+enum ElementKind <<enum>>
+{
+    PACKAGE
+    ENUM
+    INTERFACE
+    ENUM_CONSTANT
+    FIELD
+    PARAMETER
+    LOCAL_VARIABLE
+    EXCEPTION_PARAMETER
+    METHOD
+    CONSTRUCTOR
+    INSTANCE_INIT
+    TYPE_PARAMETER
+    OTHER
+    RESOURCE_VARIABLE
+    MODULE
+}
+
+enum Modifier <<enum>> {
+    PUBLIC
+    DEFAULT
+    FINAL
+    STATIC
+    PRIVATE
+    PROTECTED
+    ABSTRACT
+}
+
+enum TypeKind <<enum>>
+{
+    BOOLEAN
+    BYTE
+    SHORT
+    INT
+    LONG
+    CHAR
+    FLOAT
+    DOUBLE
+    VOID
+    NONE
+    NULL
+    ARRAY
+    isPrimitive() : boolean
+}
+
+interface ExecutableElement extends Element, Parameterizable
+interface PackageElement extends Element, QualifiedNameable
+interface Parameterizable extends Element
+interface QualifiedNameable extends Element
+interface TypeElement extends Element, Parameterizable, QualifiedNameable
+interface TypeParameterElement extends Element
+interface VariableElement extends Element
+
+Element --> Modifier : getModifiers()
+Element --> ElementKind : getKind()
+Element -> TypeMirror : getType()
+TypeMirror -> TypeKind : getKind()
+Element --> Element : \n\n getEnclosedElements()
+Element --> Name : getSimpleName()
+
+@enduml
