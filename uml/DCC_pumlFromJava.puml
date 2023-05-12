@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/class-diagram
+ skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam style strictuml
+hide empty members
+
+class FirstDoclet{
++ <<Create>> FirstDoclet()
++ init(Locale : locale,Reporter : reporter)
++ getName() : String
++ getSupportedOptions() : Set<? extends Option>
++ getSupportedSourceVersion() : SourceVersion
++ run(DocletEnvironment : environement) : boolean
+- dumpElement(Element : element)
+ }
+class PumlDoclet{
++ <<Create>> PumlDoclet()
++ init(Locale : locale,Reporter : reporter)
++ getName() : String
++ getSupportedOptions() : Set<? extends Option>
++ getSupportedSourceVersion() : SourceVersion
++ run(DocletEnvironment : environement) : boolean
+
+ }
+class PumlDiagram{
++ <<Create>> PumlDiagram()
++ {static} generatePuml(ArrayList<Element : classes>,String : d,String : out)
+- {static} processInsideClass(FileWriter : fw,Element : e)
+- {static} handleModifiers(FileWriter : fw,Element : e)
+- {static} processClass(FileWriter : fw,Element : e)
++ toString() : String
+
+ }
+class Java2Puml{
++ <<Create>> Java2Puml()
++ {static} main(String[])
+ }
+
+Java2Puml " 1\t" --> "\t1" PumlDoclet : appelle à l'aide de javadoc >
+PumlDoclet " 1\t" --> "\t1" PumlDiagram : envoie une liste d'élement du package >
+
+@enduml
+

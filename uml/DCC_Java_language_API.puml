@@ -81,7 +81,7 @@ Element --> Modifier : getModifiers()
 Element --> ElementKind : getKind()
 Element -> TypeMirror : getType()
 TypeMirror -> TypeKind : getKind()
-Element --> Element : \n\ngetEnclosedElements()
+Element --> Element : \n\n getEnclosedElements()
 Element --> Name : getSimpleName()
 
 @enduml
