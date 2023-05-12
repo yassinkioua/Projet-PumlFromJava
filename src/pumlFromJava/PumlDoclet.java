@@ -131,7 +131,7 @@ public class PumlDoclet implements Doclet {
             
         } 
 
-        PumlDiagram.generatePuml(classes, d, out);
+    PumlDiagram.generatePuml(classes, d, out, PumlType.DCA);
         return true;
     }
     
