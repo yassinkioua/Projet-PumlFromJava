@@ -13,6 +13,10 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
+import javax.lang.model.type.ExecutableType;
+import javax.lang.model.type.TypeKind;
+import javax.lang.model.type.TypeMirror;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,7 +47,7 @@ public class PumlDiagram {
                 for (Element e : temp) {
                     // System.out.println(e);
                     // fw.write(e.toString() + "\n");
-                    attributeWrite(fw, e);
+                    processInsideClass(fw, e);
                     // System.out.println(e.asType());
                     // System.out.println(e.getSimpleName()); donne le nom de la methode sans
                     // parenthese et sans les param
@@ -62,33 +66,38 @@ public class PumlDiagram {
             // TODO: handle exception
         }
     }
-
-    private static void attributeWrite(FileWriter fw, Element e) {
+    static private void processInsideClass(FileWriter fw, Element e) {
         try {
-            if (e.getKind() == ElementKind.FIELD) {
-                processInsideClass(fw, e);
-                fw.write(e.toString() + "\n");
-            } else if (e.getKind() == ElementKind.CONSTRUCTOR) {
-                processInsideClass(fw, e);
-                fw.write("<<Create>> " + e.toString() + "\n");
-            }
+           
+                if (e.getKind() == ElementKind.FIELD) {
+                    if(e.asType().getKind().isPrimitive()){
+                        handleModifiers(fw,e);
+                        fw.write(e.getSimpleName().toString() +" : "+ e.asType().toString() + "\n");
+                    }
+                } else if (e.getKind() == ElementKind.CONSTRUCTOR) {
+                    handleModifiers(fw,e);
+                    fw.write("<<Create>> " + e.toString() + "\n");
+                }
+                else if (e.getKind() == ElementKind.METHOD) {
+                    handleModifiers(fw,e);
+                    System.out.println(e.asType());
+                    if(e.asType().toString().endsWith("java.lang.String")){
+                        fw.write(e.toString() +" : String \n");
+                    }
+                    else{
+                        ExecutableType execType = (ExecutableType) e.asType();
+                        fw.write(e.toString() +" : "+execType.getReturnType()+ "\n");
+                    }
+                
+                }
 
-            else if (e.getKind() == ElementKind.METHOD) {
-                processInsideClass(fw, e);
-                fw.write(e.toString() + "\n");
-            }
 
-            // System.out.println(e.asType().toString());
-            // System.out.println(e.getKind());
-            // System.out.println(e.getModifiers());
 
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
+        } catch (Exception x) {
+            // TODO: handle exception
         }
     }
-
-    static private void processInsideClass(FileWriter fw, Element e) {
+    private static void handleModifiers(FileWriter fw, Element e){
         try {
             for (Modifier mod : e.getModifiers()) {
                 if (mod == Modifier.PRIVATE) {
@@ -110,8 +119,8 @@ public class PumlDiagram {
                     fw.write("# ");
                 }
             }
-
-        } catch (Exception x) {
+        }
+         catch (Exception x) {
             // TODO: handle exception
         }
     }
