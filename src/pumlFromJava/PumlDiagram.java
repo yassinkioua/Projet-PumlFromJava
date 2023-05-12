@@ -4,6 +4,7 @@ import java.util.List;
 import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.DocletEnvironment;
 import jdk.javadoc.doclet.Reporter;
+import jdk.javadoc.internal.doclets.formats.html.resources.standard;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -36,7 +37,7 @@ public class PumlDiagram{
             
             for(Element element : classes){
                 fw.write("class " + element.getSimpleName() + "{ \n");
-                // System.out.println(element.getEnclosedElements());
+                System.out.println(element.getKind());
                     temp.addAll(element.getEnclosedElements());
                     
                    
@@ -66,36 +67,21 @@ public class PumlDiagram{
     private static void attributeWrite(FileWriter fw, Element e){
         try {
             if(e.getKind() == ElementKind.FIELD){
-                for (Modifier mod : e.getModifiers()) {
-                    System.out.println(mod.toString());
-                    
-                    if(mod == Modifier.PRIVATE){
-                        fw.write("- " );
-                    }
-                    if(mod == Modifier.PUBLIC){
-                        fw.write("+ ");
-                    }
-
-                    if(mod == Modifier.STATIC){
-                        fw.write("{static} ");
-                    }
-
-                    if(mod == Modifier.FINAL){
-                        fw.write("final ");
-                    }
-                    if(mod == Modifier.ABSTRACT){
-                        fw.write("{abstract} ");
-                    }
-                    if(mod == Modifier.PROTECTED){
-                        fw.write("# ");
-                    }
-                    // fw.write(mod.toString() + " ");
-
-                }
+                processInsideClass(fw, e);(fw,e);
+                fw.write(e.toString() + "\n");
+            }
+            else if(e.getKind() ==  ElementKind.CONSTRUCTOR){
+                processInsideClass(fw,e);
+                fw.write("<<Create>> " + e.toString() + "\n");
+            }
+            
+            else if(e.getKind() == ElementKind.METHOD){
+                processInsideClass(fw,e);
                 fw.write(e.toString() + "\n");
             }
 
-            // fw.write("\n");
+           
+            
             // System.out.println(e.asType().toString());
             // System.out.println(e.getKind());
             // System.out.println(e.getModifiers());
@@ -107,6 +93,61 @@ public class PumlDiagram{
         }
     }
     
+    static private void processInsideClass(FileWriter fw, Element e){
+        try {
+            for (Modifier mod : e.getModifiers()) {
+                if(mod == Modifier.PRIVATE){
+                    fw.write("- " );
+                }
+                if(mod == Modifier.PUBLIC){
+                    fw.write("+ ");
+                }
+                if(mod == Modifier.STATIC){
+                    fw.write("{static} ");
+                }
+                if(mod == Modifier.FINAL){
+                    fw.write("final ");
+                }
+                if(mod == Modifier.ABSTRACT){
+                    fw.write("{abstract} ");
+                }
+                if(mod == Modifier.PROTECTED){
+                    fw.write("# ");
+                }
+            }
+            
+        } catch (Exception x) {
+            // TODO: handle exception
+        }
+    }
+
+    private static void processClass(FileWriter fw , Element e){
+        try {
+            for (Modifier mod : e.getModifiers()) {
+                if(mod == Modifier.PRIVATE){
+                    fw.write("- " );
+                }
+                if(mod == Modifier.PUBLIC){
+                    fw.write("+ ");
+                }
+                if(mod == Modifier.STATIC){
+                    fw.write("{static} ");
+                }
+                if(mod == Modifier.FINAL){
+                    fw.write("final ");
+                }
+                if(mod == Modifier.ABSTRACT){
+                    fw.write("{abstract} ");
+                }
+                if(mod == Modifier.PROTECTED){
+                    fw.write("# ");
+                }
+            }
+            
+        } catch (Exception x) {
+            // TODO: handle exception
+        }
+    }
     @Override
     public String toString() {
         return "PumlDiagram []";

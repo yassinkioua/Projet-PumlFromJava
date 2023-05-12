@@ -1,46 +1,126 @@
 @startuml
 skinparam style strictuml
 class Histoire4{ 
++ <<Create>> Histoire4()
++ {static} main(java.lang.String[])
 
  } 
 class Genre{ 
++ {static} values()
++ {static} valueOf(java.lang.String)
+- <<Create>> Genre()
 
  } 
 class HorsLaLoi{ 
++ {abstract} estLibre()
++ {abstract} getRecompense()
++ {abstract} kidnapper(western.Dame)
++ {abstract} seFaireCapturer(western.Cowboy)
++ {abstract} seFaireTirerDessus(western.Cowboy)
++ {abstract} getLook()
++ {abstract} getCaptives()
 
  } 
 class Cowboy{ 
 - gains
 - captures
++ <<Create>> Cowboy(java.lang.String)
++ <<Create>> Cowboy(java.lang.String,western.Boisson)
++ getPseudo()
++ liberer(western.Dame)
++ liberer(java.util.List<western.Dame>)
++ capturer(western.HorsLaLoi)
++ tirerSur(western.HorsLaLoi)
++ sePresenter()
 - {static} boissonParDefaut
++ {static} getBoissonParDefaut()
++ {static} setBoissonParDefaut(western.Boisson)
 
  } 
 class Nommable{ 
++ {abstract} getNom()
++ {abstract} getPseudo()
 
  } 
 class Ripou{ 
 - brigand
++ <<Create>> Ripou(java.lang.String)
++ <<Create>> Ripou(java.lang.String,western.Boisson)
++ <<Create>> Ripou(java.lang.String,western.Boisson,java.lang.String)
++ getLook()
++ estLibre()
++ getRecompense()
++ kidnapper(western.Dame)
++ getCaptives()
++ seFaireCapturer(western.Cowboy)
++ seFaireTirerDessus(western.Cowboy)
++ getPseudo()
++ sePresenter()
++ liberer(western.Dame)
 
  } 
 class Dame{ 
 - estLibre
 - sauveur
 - ravisseur
++ <<Create>> Dame(java.lang.String)
++ <<Create>> Dame(java.lang.String,western.Boisson)
++ getPseudo()
++ seFaireKidnapper(western.HorsLaLoi)
++ seFaireLiberer(western.Cowboy)
++ estLibre()
++ sePresenter()
 - {static} boissonParDefaut
++ {static} getBoissonParDefaut()
++ {static} setBoissonParDefaut(western.Boisson)
++ getRavisseur()
 
  } 
 class Substantif{ 
 - nom
 - genre
++ <<Create>> Substantif(java.lang.String,western.Genre)
++ getNom()
++ getGenre()
++ toString()
++ {static} isVowel(char)
++ {static} startsWithVowel(java.lang.String)
++ getArticleIndefini()
++ avecArticleIndefini()
++ {static} getArticleDefini(western.Genre)
++ getArticleDefini()
++ avecArticleDefini()
++ {static} faireElision(java.lang.String)
++ elision()
++ getArticlePartitif()
++ avecArticlePartitif()
++ avecElision(java.lang.String)
++ avecPreposition(java.lang.String)
 
  } 
 class Narrateur{ 
++ <<Create>> Narrateur()
++ <<Create>> Narrateur(java.lang.String)
++ dire(java.lang.String)
++ boire(western.Boisson)
++ boire()
++ getPseudo()
 
  } 
 class Personnage{ 
 - {static} BOISSON_PAR_DEFAUT
 - nom
 - boisson
++ <<Create>> Personnage(java.lang.String)
++ <<Create>> Personnage(java.lang.String,western.Boisson)
++ dire(java.lang.String)
++ sePresenter()
++ boire(western.Boisson)
++ boire()
++ getNom()
++ getBoisson()
++ {static} getPseudos(java.util.List<? extends western.Nommable>)
++ {static} getBoissonParDefaut()
 
  } 
 class Brigand{ 
@@ -50,12 +130,33 @@ class Brigand{
 - estLibre
 - captives
 - gardien
++ <<Create>> Brigand(java.lang.String)
++ <<Create>> Brigand(java.lang.String,western.Boisson)
++ <<Create>> Brigand(java.lang.String,western.Boisson,java.lang.String)
++ getLook()
++ getRecompense()
++ estLibre()
++ kidnapper(western.Dame)
++ seFaireCapturer(western.Cowboy)
++ seFaireTirerDessus(western.Cowboy)
++ getPseudo()
++ getCaptives()
++ sePresenter()
 - {static} boissonParDefaut
++ {static} getBoissonParDefaut()
++ {static} setBoissonParDefaut(western.Boisson)
 
  } 
 class Boisson{ 
 - final substantif
 + {static} final EAU
++ <<Create>> Boisson(java.lang.String,western.Genre)
++ getNom()
++ getGenre()
++ getNomAvecArticleIndefini()
++ getNomAvecArticlePartitif()
++ getNomAvecArticleDefini()
++ getNomAvecPreposition(java.lang.String)
 
  } 
 @enduml
