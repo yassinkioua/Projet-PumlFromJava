@@ -22,6 +22,7 @@ import java.util.Set;
 public class PumlDoclet implements Doclet {
     private String out = null; 
     private String d = null;
+    private String type = null;
 
 
     abstract class Option implements Doclet.Option {
@@ -82,6 +83,14 @@ public class PumlDoclet implements Doclet {
                     d = arguments.get(0);
                     return true;
                 }
+            },
+            new Option("-type", true,"sets the type of uml", "<string>"){
+
+                @Override
+                public boolean process(String option, List<String> arguments){
+                    type = arguments.get(0);
+                    return true;
+                }
             }
     );
 
@@ -131,7 +140,7 @@ public class PumlDoclet implements Doclet {
             
         } 
 
-    PumlDiagram.generatePuml(classes, d, out, PumlType.DCA);
+    PumlDiagram.generatePuml(classes, d, out, PumlType.DCC);
         return true;
     }
     

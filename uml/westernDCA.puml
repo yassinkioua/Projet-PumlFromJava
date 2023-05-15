@@ -5,36 +5,8 @@ skinparam classFontStyle Bold
 skinparam style strictuml
 hide empty members
 package western{ 
-class Histoire4{ 
-
- } 
-enum Genre <<enum>> { 
-
- } 
-interface HorsLaLoi <<interface>> { 
-
- } 
 class Cowboy{ 
 - gains : int
-
- } 
-interface Nommable <<interface>> { 
-
- } 
-class Ripou{ 
-
- } 
-class Dame{ 
-- estLibre : boolean
-
- } 
-class Substantif{ 
-
- } 
-class Narrateur{ 
-
- } 
-abstract class Personnage{ 
 
  } 
 class Brigand{ 
@@ -42,7 +14,35 @@ class Brigand{
 - estLibre : boolean
 
  } 
+class Dame{ 
+- estLibre : boolean
+
+ } 
 class Boisson{ 
+
+ } 
+class Histoire4{ 
+
+ } 
+class Narrateur{ 
+
+ } 
+class Ripou{ 
+
+ } 
+class Substantif{ 
+
+ } 
+enum Genre <<enum>> { 
+
+ } 
+interface Nommable <<interface>> { 
+
+ } 
+abstract class Personnage{ 
+
+ } 
+interface HorsLaLoi <<interface>> { 
 
  } 
 }
