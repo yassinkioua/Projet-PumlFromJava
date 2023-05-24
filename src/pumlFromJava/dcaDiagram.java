@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.io.FileWriter;
 
-class dcaDiagram extends dccDiagram {
+class dcaDiagram extends umlDiagram {
     @Override
     public String generatePuml(ArrayList<Element> classes, String d, String out) {
 

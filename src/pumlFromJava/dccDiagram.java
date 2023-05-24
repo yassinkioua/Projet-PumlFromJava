@@ -24,40 +24,41 @@ import java.util.Dictionary;
 import java.util.Locale;
 import java.util.Set;
 
-public class dccDiagram {
-    protected String uml = "";
+public class dccDiagram extends umlDiagram {
+
+    @Override
     protected String generatePuml(ArrayList<Element> classes, String d, String out) {
 
         try {
-            uml += "@startuml\n";
-            uml +="'https://plantuml.com/class-diagram \n skinparam classAttributeIconSize 0 \nskinparam classFontStyle Bold\nskinparam style strictuml\nhide empty members\n";
+            super.uml += "@startuml\n";
+            super.uml +="'https://plantuml.com/class-diagram \n skinparam classAttributeIconSize 0 \nskinparam classFontStyle Bold\nskinparam style strictuml\nhide empty members\n";
 
             ArrayList<Element> temp = new ArrayList<Element>();
             for (Element element : classes) {
 
-                uml += processClass(element);
+                super.uml += processClass(element);
                 temp.addAll(element.getEnclosedElements());
                
                     for (Element e : temp) {
-                       uml += processInsideClass(e);
+                        super.uml += processInsideClass(e);
                     }
                
             
-                uml+=("\n } \n");
+                super.uml+=("\n } \n");
                 temp = new ArrayList<Element>();
 
             }
         
-            uml+=("@enduml\n");
+            super.uml+=("@enduml\n");
           
 
         } catch (Exception e) {
             // TODO: handle exception
         }
 
-        return uml;
+        return super.uml;
     }
-
+    @Override
     protected String processInsideClass(Element e) {
         try {
             String r = "";
@@ -97,62 +98,62 @@ public class dccDiagram {
        
     }
 
-    protected String handleModifiers(Element e) {
-        try {
-            String r = "";
-            for (Modifier mod : e.getModifiers()) {
-                if (mod == Modifier.PRIVATE) {
-                    r += ("- ");
-                }
-                if (mod == Modifier.PUBLIC) {
-                    r += ("+ ");
-                }
-                if (mod == Modifier.STATIC) {
-                    r += ("{static} ");
-                }
-                if (mod == Modifier.FINAL) {
-                    r += ("final ");
-                }
-                if (mod == Modifier.ABSTRACT) {
-                    r += ("{abstract} ");
-                }
-                if (mod == Modifier.PROTECTED) {
-                    r += ("# ");
-                }
-                return r;
-            }
-        } catch (Exception x) {
-            return "CATCHED ERROR";
-        }
-        return "ERROR";
-    }
+    // protected String handleModifiers(Element e) {
+    //     try {
+    //         String r = "";
+    //         for (Modifier mod : e.getModifiers()) {
+    //             if (mod == Modifier.PRIVATE) {
+    //                 r += ("- ");
+    //             }
+    //             if (mod == Modifier.PUBLIC) {
+    //                 r += ("+ ");
+    //             }
+    //             if (mod == Modifier.STATIC) {
+    //                 r += ("{static} ");
+    //             }
+    //             if (mod == Modifier.FINAL) {
+    //                 r += ("final ");
+    //             }
+    //             if (mod == Modifier.ABSTRACT) {
+    //                 r += ("{abstract} ");
+    //             }
+    //             if (mod == Modifier.PROTECTED) {
+    //                 r += ("# ");
+    //             }
+    //             return r;
+    //         }
+    //     } catch (Exception x) {
+    //         return "CATCHED ERROR";
+    //     }
+    //     return "ERROR";
+    // }
 
-    protected String processClass(Element e) {
-        try {
-            String r ="";
-            if (e.getKind() == ElementKind.ENUM) {
-                r += "enum " + e.getSimpleName().toString() + " <<enum>> { \n";
+    // protected String processClass(Element e) {
+    //     try {
+    //         String r ="";
+    //         if (e.getKind() == ElementKind.ENUM) {
+    //             r += "enum " + e.getSimpleName().toString() + " <<enum>> { \n";
 
-            } else if (e.getKind() == ElementKind.INTERFACE) {
-                r += "interface " + e.getSimpleName().toString() + " <<interface>> { \n";
+    //         } else if (e.getKind() == ElementKind.INTERFACE) {
+    //             r += "interface " + e.getSimpleName().toString() + " <<interface>> { \n";
 
-            } else if (e.getKind() == ElementKind.CLASS) {
-                for (Modifier m : e.getModifiers()) {
-                    if (m == Modifier.ABSTRACT) {
-                       r += "abstract ";
-                    }
-                }
+    //         } else if (e.getKind() == ElementKind.CLASS) {
+    //             for (Modifier m : e.getModifiers()) {
+    //                 if (m == Modifier.ABSTRACT) {
+    //                    r += "abstract ";
+    //                 }
+    //             }
 
-                r += "class " + e.getSimpleName().toString() + "{ \n";
+    //             r += "class " + e.getSimpleName().toString() + "{ \n";
 
-            }
-            return r;
-        }
+    //         }
+    //         return r;
+    //     }
 
-        catch (Exception x) {
-            // TODO: handle exception
-        }
-        return "ERROR";
+    //     catch (Exception x) {
+    //         // TODO: handle exception
+    //     }
+    //     return "ERROR";
         
-    }
+    // }
 }

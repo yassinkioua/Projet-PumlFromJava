@@ -132,8 +132,8 @@ public class PumlDoclet implements Doclet {
         } 
         
         // dcaDiagram dcD = new dcaDiagram();
-        String filepath = d + "/" + out;
         dccDiagram dcD = new dccDiagram();
+        String filepath = d + "/" + out;
         try {
             FileWriter fw = new FileWriter(filepath);
             fw.write(dcD.generatePuml(classes, d, out));
