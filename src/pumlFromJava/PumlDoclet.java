@@ -7,7 +7,7 @@ import jdk.javadoc.doclet.Reporter;
 
 import java.io.File;
 import java.io.FileWriter;
-
+import java.io.IOException;
 
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
@@ -22,7 +22,6 @@ import java.util.Set;
 public class PumlDoclet implements Doclet {
     private String out = null; 
     private String d = null;
-    private String type = null;
 
 
     abstract class Option implements Doclet.Option {
@@ -83,14 +82,6 @@ public class PumlDoclet implements Doclet {
                     d = arguments.get(0);
                     return true;
                 }
-            },
-            new Option("-type", true,"sets the type of uml", "<string>"){
-
-                @Override
-                public boolean process(String option, List<String> arguments){
-                    type = arguments.get(0);
-                    return true;
-                }
             }
     );
 
@@ -139,8 +130,19 @@ public class PumlDoclet implements Doclet {
             classes.addAll(element.getEnclosedElements());
             
         } 
-
-    PumlDiagram.generatePuml(classes, d, out, PumlType.DCC);
+        
+        // dcaDiagram dcD = new dcaDiagram();
+        String filepath = d + "/" + out;
+        dccDiagram dcD = new dccDiagram();
+        try {
+            FileWriter fw = new FileWriter(filepath);
+            fw.write(dcD.generatePuml(classes, d, out));
+            fw.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        // PumlDiagram.generatePuml(classes, d, out);
         return true;
     }
     
