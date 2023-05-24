@@ -9,13 +9,13 @@ class Cowboy{
 + <<Create>> Cowboy(java.lang.String)
 + <<Create>> Cowboy(java.lang.String,western.Boisson)
 + getPseudo() : String 
-+ liberer(western.Dame) : void
-+ liberer(java.util.List<western.Dame>) : void
-+ capturer(western.HorsLaLoi) : void
-+ tirerSur(western.HorsLaLoi) : void
-+ sePresenter() : void
-+ {static} getBoissonParDefaut() : western.Boisson
-+ {static} setBoissonParDefaut(western.Boisson) : void
++ liberer(western.Dame)
++ liberer(java.util.List<western.Dame>)
++ capturer(western.HorsLaLoi)
++ tirerSur(western.HorsLaLoi)
++ sePresenter()
++ getBoissonParDefaut() : western.Boisson
++ setBoissonParDefaut(western.Boisson)
 
  } 
 class Brigand{ 
@@ -27,14 +27,14 @@ class Brigand{
 + getLook() : String 
 + getRecompense() : int
 + estLibre() : boolean
-+ kidnapper(western.Dame) : void
-+ seFaireCapturer(western.Cowboy) : void
-+ seFaireTirerDessus(western.Cowboy) : void
++ kidnapper(western.Dame)
++ seFaireCapturer(western.Cowboy)
++ seFaireTirerDessus(western.Cowboy)
 + getPseudo() : String 
 + getCaptives() : java.util.List<western.Dame>
-+ sePresenter() : void
-+ {static} getBoissonParDefaut() : western.Boisson
-+ {static} setBoissonParDefaut(western.Boisson) : void
++ sePresenter()
++ getBoissonParDefaut() : western.Boisson
++ setBoissonParDefaut(western.Boisson)
 
  } 
 class Dame{ 
@@ -42,12 +42,12 @@ class Dame{
 + <<Create>> Dame(java.lang.String)
 + <<Create>> Dame(java.lang.String,western.Boisson)
 + getPseudo() : String 
-+ seFaireKidnapper(western.HorsLaLoi) : void
-+ seFaireLiberer(western.Cowboy) : void
++ seFaireKidnapper(western.HorsLaLoi)
++ seFaireLiberer(western.Cowboy)
 + estLibre() : boolean
-+ sePresenter() : void
-+ {static} getBoissonParDefaut() : western.Boisson
-+ {static} setBoissonParDefaut(western.Boisson) : void
++ sePresenter()
++ getBoissonParDefaut() : western.Boisson
++ setBoissonParDefaut(western.Boisson)
 + getRavisseur() : western.HorsLaLoi
 
  } 
@@ -63,15 +63,15 @@ class Boisson{
  } 
 class Histoire4{ 
 + <<Create>> Histoire4()
-+ {static} main(java.lang.String[]) : void
++ main(java.lang.String[])
 
  } 
 class Narrateur{ 
 + <<Create>> Narrateur()
 + <<Create>> Narrateur(java.lang.String)
-+ dire(java.lang.String) : void
-+ boire(western.Boisson) : void
-+ boire() : void
++ dire(java.lang.String)
++ boire(western.Boisson)
++ boire()
 + getPseudo() : String 
 
  } 
@@ -82,13 +82,13 @@ class Ripou{
 + getLook() : String 
 + estLibre() : boolean
 + getRecompense() : int
-+ kidnapper(western.Dame) : void
++ kidnapper(western.Dame)
 + getCaptives() : java.util.List<western.Dame>
-+ seFaireCapturer(western.Cowboy) : void
-+ seFaireTirerDessus(western.Cowboy) : void
++ seFaireCapturer(western.Cowboy)
++ seFaireTirerDessus(western.Cowboy)
 + getPseudo() : String 
-+ sePresenter() : void
-+ liberer(western.Dame) : void
++ sePresenter()
++ liberer(western.Dame)
 
  } 
 class Substantif{ 
@@ -96,14 +96,14 @@ class Substantif{
 + getNom() : String 
 + getGenre() : western.Genre
 + toString() : String 
-+ {static} isVowel(char) : boolean
-+ {static} startsWithVowel(java.lang.String) : boolean
++ isVowel(char) : boolean
++ startsWithVowel(java.lang.String) : boolean
 + getArticleIndefini() : String 
 + avecArticleIndefini() : String 
-+ {static} getArticleDefini(western.Genre) : String 
++ getArticleDefini(western.Genre) : String 
 + getArticleDefini() : String 
 + avecArticleDefini() : String 
-+ {static} faireElision(java.lang.String) : String 
++ faireElision(java.lang.String) : String 
 + elision() : boolean
 + getArticlePartitif() : String 
 + avecArticlePartitif() : String 
@@ -112,37 +112,37 @@ class Substantif{
 
  } 
 enum Genre <<enum>> { 
-+ {static} values() : western.Genre[]
-+ {static} valueOf(java.lang.String) : western.Genre
++ values() : western.Genre[]
++ valueOf(java.lang.String) : western.Genre
 - <<Create>> Genre()
 
  } 
 interface Nommable <<interface>> { 
-+ {abstract} getNom() : String 
-+ {abstract} getPseudo() : String 
++ getNom() : String 
++ getPseudo() : String 
 
  } 
 abstract class Personnage{ 
 + <<Create>> Personnage(java.lang.String)
 + <<Create>> Personnage(java.lang.String,western.Boisson)
-+ dire(java.lang.String) : void
-+ sePresenter() : void
-+ boire(western.Boisson) : void
-+ boire() : void
++ dire(java.lang.String)
++ sePresenter()
++ boire(western.Boisson)
++ boire()
 + getNom() : String 
 + getBoisson() : western.Boisson
-+ {static} getPseudos(java.util.List<? extends western.Nommable>) : String 
-+ {static} getBoissonParDefaut() : western.Boisson
++ getPseudos(java.util.List<? extends western.Nommable>) : String 
++ getBoissonParDefaut() : western.Boisson
 
  } 
 interface HorsLaLoi <<interface>> { 
-+ {abstract} estLibre() : boolean
-+ {abstract} getRecompense() : int
-+ {abstract} kidnapper(western.Dame) : void
-+ {abstract} seFaireCapturer(western.Cowboy) : void
-+ {abstract} seFaireTirerDessus(western.Cowboy) : void
-+ {abstract} getLook() : String 
-+ {abstract} getCaptives() : java.util.List<western.Dame>
++ estLibre() : boolean
++ getRecompense() : int
++ kidnapper(western.Dame)
++ seFaireCapturer(western.Cowboy)
++ seFaireTirerDessus(western.Cowboy)
++ getLook() : String 
++ getCaptives() : java.util.List<western.Dame>
 
  } 
 @enduml

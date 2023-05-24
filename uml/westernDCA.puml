@@ -4,27 +4,6 @@
 skinparam classFontStyle Bold
 skinparam style strictuml
 hide empty members
-class Histoire4{ 
-+ <<Create>> Histoire4()
-+ main(java.lang.String[])
-
- } 
-enum Genre <<enum>> { 
-+ values() : western.Genre[]
-+ valueOf(java.lang.String) : western.Genre
-- <<Create>> Genre()
-
- } 
-interface HorsLaLoi <<interface>> { 
-+ estLibre() : boolean
-+ getRecompense() : int
-+ kidnapper(western.Dame)
-+ seFaireCapturer(western.Cowboy)
-+ seFaireTirerDessus(western.Cowboy)
-+ getLook() : String 
-+ getCaptives() : java.util.List<western.Dame>
-
- } 
 class Cowboy{ 
 - gains : int
 + <<Create>> Cowboy(java.lang.String)
@@ -39,8 +18,60 @@ class Cowboy{
 + setBoissonParDefaut(western.Boisson)
 
  } 
-interface Nommable <<interface>> { 
+class Brigand{ 
+- recompense : int
+- estLibre : boolean
++ <<Create>> Brigand(java.lang.String)
++ <<Create>> Brigand(java.lang.String,western.Boisson)
++ <<Create>> Brigand(java.lang.String,western.Boisson,java.lang.String)
++ getLook() : String 
++ getRecompense() : int
++ estLibre() : boolean
++ kidnapper(western.Dame)
++ seFaireCapturer(western.Cowboy)
++ seFaireTirerDessus(western.Cowboy)
++ getPseudo() : String 
++ getCaptives() : java.util.List<western.Dame>
++ sePresenter()
++ getBoissonParDefaut() : western.Boisson
++ setBoissonParDefaut(western.Boisson)
+
+ } 
+class Dame{ 
+- estLibre : boolean
++ <<Create>> Dame(java.lang.String)
++ <<Create>> Dame(java.lang.String,western.Boisson)
++ getPseudo() : String 
++ seFaireKidnapper(western.HorsLaLoi)
++ seFaireLiberer(western.Cowboy)
++ estLibre() : boolean
++ sePresenter()
++ getBoissonParDefaut() : western.Boisson
++ setBoissonParDefaut(western.Boisson)
++ getRavisseur() : western.HorsLaLoi
+
+ } 
+class Boisson{ 
++ <<Create>> Boisson(java.lang.String,western.Genre)
 + getNom() : String 
++ getGenre() : western.Genre
++ getNomAvecArticleIndefini() : String 
++ getNomAvecArticlePartitif() : String 
++ getNomAvecArticleDefini() : String 
++ getNomAvecPreposition(java.lang.String) : String 
+
+ } 
+class Histoire4{ 
++ <<Create>> Histoire4()
++ main(java.lang.String[])
+
+ } 
+class Narrateur{ 
++ <<Create>> Narrateur()
++ <<Create>> Narrateur(java.lang.String)
++ dire(java.lang.String)
++ boire(western.Boisson)
++ boire()
 + getPseudo() : String 
 
  } 
@@ -58,20 +89,6 @@ class Ripou{
 + getPseudo() : String 
 + sePresenter()
 + liberer(western.Dame)
-
- } 
-class Dame{ 
-- estLibre : boolean
-+ <<Create>> Dame(java.lang.String)
-+ <<Create>> Dame(java.lang.String,western.Boisson)
-+ getPseudo() : String 
-+ seFaireKidnapper(western.HorsLaLoi)
-+ seFaireLiberer(western.Cowboy)
-+ estLibre() : boolean
-+ sePresenter()
-+ getBoissonParDefaut() : western.Boisson
-+ setBoissonParDefaut(western.Boisson)
-+ getRavisseur() : western.HorsLaLoi
 
  } 
 class Substantif{ 
@@ -94,12 +111,14 @@ class Substantif{
 + avecPreposition(java.lang.String) : String 
 
  } 
-class Narrateur{ 
-+ <<Create>> Narrateur()
-+ <<Create>> Narrateur(java.lang.String)
-+ dire(java.lang.String)
-+ boire(western.Boisson)
-+ boire()
+enum Genre <<enum>> { 
++ values() : western.Genre[]
++ valueOf(java.lang.String) : western.Genre
+- <<Create>> Genre()
+
+ } 
+interface Nommable <<interface>> { 
++ getNom() : String 
 + getPseudo() : String 
 
  } 
@@ -116,33 +135,14 @@ abstract class Personnage{
 + getBoissonParDefaut() : western.Boisson
 
  } 
-class Brigand{ 
-- recompense : int
-- estLibre : boolean
-+ <<Create>> Brigand(java.lang.String)
-+ <<Create>> Brigand(java.lang.String,western.Boisson)
-+ <<Create>> Brigand(java.lang.String,western.Boisson,java.lang.String)
-+ getLook() : String 
-+ getRecompense() : int
+interface HorsLaLoi <<interface>> { 
 + estLibre() : boolean
++ getRecompense() : int
 + kidnapper(western.Dame)
 + seFaireCapturer(western.Cowboy)
 + seFaireTirerDessus(western.Cowboy)
-+ getPseudo() : String 
++ getLook() : String 
 + getCaptives() : java.util.List<western.Dame>
-+ sePresenter()
-+ getBoissonParDefaut() : western.Boisson
-+ setBoissonParDefaut(western.Boisson)
-
- } 
-class Boisson{ 
-+ <<Create>> Boisson(java.lang.String,western.Genre)
-+ getNom() : String 
-+ getGenre() : western.Genre
-+ getNomAvecArticleIndefini() : String 
-+ getNomAvecArticlePartitif() : String 
-+ getNomAvecArticleDefini() : String 
-+ getNomAvecPreposition(java.lang.String) : String 
 
  } 
 @enduml

@@ -4,43 +4,48 @@
 skinparam classFontStyle Bold
 skinparam style strictuml
 hide empty members
-class FirstDoclet{ 
-+ <<Create>> FirstDoclet()
-+ init(java.util.Locale,jdk.javadoc.doclet.Reporter) : void
-+ getName() : String 
-+ getSupportedOptions() : java.util.Set<? extends jdk.javadoc.doclet.Doclet.Option>
-+ getSupportedSourceVersion() : javax.lang.model.SourceVersion
-+ run(jdk.javadoc.doclet.DocletEnvironment) : boolean
-- dumpElement(javax.lang.model.element.Element) : void
-
- } 
-enum PumlType <<enum>> { 
-+ {static} values() : pumlFromJava.PumlType[]
-+ {static} valueOf(java.lang.String) : pumlFromJava.PumlType
-- <<Create>> PumlType()
+class dcaDiagram{ 
+ERROR<<Create>> dcaDiagram()
++ generatePuml(java.util.ArrayList<javax.lang.model.element.Element>,java.lang.String,java.lang.String) : String 
+# processInsideClass(javax.lang.model.element.Element) : String 
 
  } 
 class PumlDoclet{ 
 + <<Create>> PumlDoclet()
-+ init(java.util.Locale,jdk.javadoc.doclet.Reporter) : void
++ init(java.util.Locale,jdk.javadoc.doclet.Reporter)
 + getName() : String 
 + getSupportedOptions() : java.util.Set<? extends pumlFromJava.PumlDoclet.Option>
 + getSupportedSourceVersion() : javax.lang.model.SourceVersion
 + run(jdk.javadoc.doclet.DocletEnvironment) : boolean
 
  } 
-class PumlDiagram{ 
-+ <<Create>> PumlDiagram()
-+ {static} generatePuml(java.util.ArrayList<javax.lang.model.element.Element>,java.lang.String,java.lang.String,pumlFromJava.PumlType) : void
-- {static} processInsideClass(java.io.FileWriter,javax.lang.model.element.Element) : void
-- {static} handleModifiers(java.io.FileWriter,javax.lang.model.element.Element) : void
-- {static} processClass(java.io.FileWriter,javax.lang.model.element.Element) : void
-+ toString() : String 
+class FirstDoclet{ 
++ <<Create>> FirstDoclet()
++ init(java.util.Locale,jdk.javadoc.doclet.Reporter)
++ getName() : String 
++ getSupportedOptions() : java.util.Set<? extends jdk.javadoc.doclet.Doclet.Option>
++ getSupportedSourceVersion() : javax.lang.model.SourceVersion
++ run(jdk.javadoc.doclet.DocletEnvironment) : boolean
+- dumpElement(javax.lang.model.element.Element)
 
  } 
 class Java2Puml{ 
 + <<Create>> Java2Puml()
-+ {static} main(java.lang.String[]) : void
++ main(java.lang.String[])
+
+ } 
+enum PumlType <<enum>> { 
++ values() : pumlFromJava.PumlType[]
++ valueOf(java.lang.String) : pumlFromJava.PumlType
+- <<Create>> PumlType()
+
+ } 
+class dccDiagram{ 
++ <<Create>> dccDiagram()
+# generatePuml(java.util.ArrayList<javax.lang.model.element.Element>,java.lang.String,java.lang.String) : String 
+# processInsideClass(javax.lang.model.element.Element) : String 
+# handleModifiers(javax.lang.model.element.Element) : String 
+# processClass(javax.lang.model.element.Element) : String 
 
  } 
 @enduml

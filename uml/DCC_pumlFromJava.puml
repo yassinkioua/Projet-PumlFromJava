@@ -5,15 +5,23 @@ skinparam classFontStyle Bold
 skinparam style strictuml
 hide empty members
 
-class FirstDoclet{
-+ <<Create>> FirstDoclet()
-+ init(Locale : locale,Reporter : reporter)
-+ getName() : String
-+ getSupportedOptions() : Set<? extends Option>
-+ getSupportedSourceVersion() : SourceVersion
-+ run(DocletEnvironment : environement) : boolean
-- dumpElement(Element : element)
+class dcaDiagram{
+<<Create>> dcaDiagram()
++ generatePuml(ArrayList<Element> classes,String : d,String : out) : String
+# processInsideClass(Element : e) : String
+}
+
+class dccDiagram{
+# String : uml
++ <<Create>> dccDiagram()
+# generatePuml(ArrayList<Element> classes,String : d,String : out) : String
+# processInsideClass(Element : e) : String
+# handleModifiers(Element : e) : String
+# processClass(Element : e) : String
  }
+
+
+
 class PumlDoclet{
 + <<Create>> PumlDoclet()
 + init(Locale : locale,Reporter : reporter)
@@ -23,22 +31,20 @@ class PumlDoclet{
 + run(DocletEnvironment : environement) : boolean
 
  }
-class PumlDiagram{
-+ <<Create>> PumlDiagram()
-+ {static} generatePuml(ArrayList<Element : classes>,String : d,String : out)
-- {static} processInsideClass(FileWriter : fw,Element : e)
-- {static} handleModifiers(FileWriter : fw,Element : e)
-- {static} processClass(FileWriter : fw,Element : e)
-+ toString() : String
 
- }
 class Java2Puml{
 + <<Create>> Java2Puml()
-+ {static} main(String[])
++ main(String[])
  }
 
+'enum PumlType <<enum>> {
+'  DCA
+'  DCC
+'}
+
 Java2Puml " 1\t" --> "\t1" PumlDoclet : appelle à l'aide de javadoc >
-PumlDoclet " 1\t" --> "\t1" PumlDiagram : envoie une liste d'élement du package >
+PumlDoclet " 1\t" --> "\t1" dcaDiagram  : envoie une liste d'élement du package \n<<use>>
+PumlDoclet " 1\t" --> "\t1" dccDiagram : envoie une liste d'éledu package > \n <<use>>
 
 @enduml
 

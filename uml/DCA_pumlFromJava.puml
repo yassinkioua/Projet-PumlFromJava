@@ -6,12 +6,14 @@ skinparam style strictuml
 hide empty members
 
 class PumlDoclet
-class PumlDiagram
+class dccDiagram
 class Java2Puml
-class FirstDoclet
+class dcaDiagram
+'enum PumlType
 
 Java2Puml " 1\t" --> "\t1" PumlDoclet : appelle à l'aide de javadoc >
-PumlDoclet " 1\t" --> "\t1" PumlDiagram : envoie une liste d'élement du package >
+PumlDoclet " 1\t" --> "\t1" dcaDiagram  : envoie une liste d'élement du package \n<<use>>
+PumlDoclet " 1\t" --> "\t1" dccDiagram : envoie une liste d'éledu package > \n <<use>>
 
 
 @enduml
