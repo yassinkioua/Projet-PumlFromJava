@@ -22,6 +22,7 @@ import java.util.Set;
 public class PumlDoclet implements Doclet {
     private String out = null; 
     private String d = null;
+    private String umlType = null;
 
 
     abstract class Option implements Doclet.Option {
@@ -82,6 +83,14 @@ public class PumlDoclet implements Doclet {
                     d = arguments.get(0);
                     return true;
                 }
+            },
+            new Option("-umlType", true,"defines the type of uml wanted", "<string>"){
+
+                @Override
+                public boolean process(String option, List<String> arguments){
+                    umlType = arguments.get(0);
+                    return true;
+                }
             }
     );
 
@@ -130,11 +139,18 @@ public class PumlDoclet implements Doclet {
             classes.addAll(element.getEnclosedElements());
             
         } 
-        
-        // dcaDiagram dcD = new dcaDiagram();
-        dccDiagram dcD = new dccDiagram();
         String filepath = d + "/" + out;
+        
         try {
+            umlDiagram dcD = new umlDiagram() {};
+            
+            if(umlType == "DCA"){
+                dcD = new dcaDiagram();
+                
+            }
+            else if(umlType =="DCC"){
+                dcD = new dccDiagram();
+            }
             FileWriter fw = new FileWriter(filepath);
             fw.write(dcD.generatePuml(classes, d, out));
             fw.close();

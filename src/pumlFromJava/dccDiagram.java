@@ -12,10 +12,14 @@ import java.io.IOException;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import javax.print.attribute.standard.Sides;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -34,12 +38,25 @@ public class dccDiagram extends umlDiagram {
             super.uml +="'https://plantuml.com/class-diagram \n skinparam classAttributeIconSize 0 \nskinparam classFontStyle Bold\nskinparam style strictuml\nhide empty members\n";
 
             ArrayList<Element> temp = new ArrayList<Element>();
+            //parcourt les classe dans la liste classes
             for (Element element : classes) {
+                //traite la gestion des package
+                if(element.getEnclosingElement().getSimpleName() != super.currentPackage){
+                    if(super.currentPackage != null){
+                        super.uml += "\n}\n";
+                    }
+                    super.uml += super.openPackage(element);
+                    super.currentPackage = element.getEnclosingElement().getSimpleName();
+                }
 
+                // traite la classe courante
                 super.uml += processClass(element);
+
+                // traite l'interieur de la classe
                 temp.addAll(element.getEnclosedElements());
                
                     for (Element e : temp) {
+                        
                         super.uml += processInsideClass(e);
                     }
                
@@ -48,8 +65,8 @@ public class dccDiagram extends umlDiagram {
                 temp = new ArrayList<Element>();
 
             }
-        
-            super.uml+=("@enduml\n");
+            super.uml += super.processLiaison();
+            super.uml += ("}\n@enduml\n");
           
 
         } catch (Exception e) {
@@ -62,98 +79,56 @@ public class dccDiagram extends umlDiagram {
     protected String processInsideClass(Element e) {
         try {
             String r = "";
-            if (e.getKind() == ElementKind.FIELD) {
+            if(e.getEnclosingElement().getKind() == ElementKind.ENUM){
+                if(e.getKind() == ElementKind.ENUM_CONSTANT){
+                    r += e.toString() + "\n"; 
+                }
+
+
+            }
+            else if (e.getKind() == ElementKind.FIELD) {
                 if (e.asType().getKind().isPrimitive()) {
                     r += handleModifiers(e);
                     r += (e.getSimpleName().toString() + " : " + e.asType().toString() + "\n");
                 }
+                else {
+                    if(e.asType().toString().contains(e.getEnclosingElement().getEnclosingElement().getSimpleName().toString())){
+                        super.liaison.add((e.getEnclosingElement().getSimpleName().toString() + " - " + super.getNomSimple(e.asType()) + "\n"));
+                        return "";
+                    }
+                }
+                
 
             }
 
             else if (e.getKind() == ElementKind.CONSTRUCTOR) {
                 r += handleModifiers(e);
-                r += ("<<Create>> " + e.toString() + "\n");
+                r += ("<<Create>> " + super.getNameWithParams(e) +"\n");
+                
+               
             }
             
             else if (e.getKind() == ElementKind.METHOD) {
                 r += handleModifiers(e);
                 // System.out.println(e.asType());
                 if (e.asType().toString().endsWith("java.lang.String")) {
-                    r += (e.toString() + " : String \n");
+                  
+                    r += (super.getNameWithParams(e) + " : " + super.getNomSimple(e.asType())+"\n");
                 }
                 else if(e.asType().toString().endsWith("void")){
-                    r += (e.toString() + "\n" );
+                    r += (super.getNameWithParams(e) + "\n" );
                 }
                 else {
                     ExecutableType execType = (ExecutableType) e.asType();
-                    r += (e.toString() + " : " + execType.getReturnType() + "\n");
+                    r += (super.getNameWithParams(e) + " : " + super.getNomSimple(execType.getReturnType()) + "\n");
                 }
             } 
             return r;
             
 
         } catch (Exception x) {
-            return "CATCHED ERROR";
+            return "CATCHED PROCESS INSIDE CLASS ERROR";
         }
        
     }
-
-    // protected String handleModifiers(Element e) {
-    //     try {
-    //         String r = "";
-    //         for (Modifier mod : e.getModifiers()) {
-    //             if (mod == Modifier.PRIVATE) {
-    //                 r += ("- ");
-    //             }
-    //             if (mod == Modifier.PUBLIC) {
-    //                 r += ("+ ");
-    //             }
-    //             if (mod == Modifier.STATIC) {
-    //                 r += ("{static} ");
-    //             }
-    //             if (mod == Modifier.FINAL) {
-    //                 r += ("final ");
-    //             }
-    //             if (mod == Modifier.ABSTRACT) {
-    //                 r += ("{abstract} ");
-    //             }
-    //             if (mod == Modifier.PROTECTED) {
-    //                 r += ("# ");
-    //             }
-    //             return r;
-    //         }
-    //     } catch (Exception x) {
-    //         return "CATCHED ERROR";
-    //     }
-    //     return "ERROR";
-    // }
-
-    // protected String processClass(Element e) {
-    //     try {
-    //         String r ="";
-    //         if (e.getKind() == ElementKind.ENUM) {
-    //             r += "enum " + e.getSimpleName().toString() + " <<enum>> { \n";
-
-    //         } else if (e.getKind() == ElementKind.INTERFACE) {
-    //             r += "interface " + e.getSimpleName().toString() + " <<interface>> { \n";
-
-    //         } else if (e.getKind() == ElementKind.CLASS) {
-    //             for (Modifier m : e.getModifiers()) {
-    //                 if (m == Modifier.ABSTRACT) {
-    //                    r += "abstract ";
-    //                 }
-    //             }
-
-    //             r += "class " + e.getSimpleName().toString() + "{ \n";
-
-    //         }
-    //         return r;
-    //     }
-
-    //     catch (Exception x) {
-    //         // TODO: handle exception
-    //     }
-    //     return "ERROR";
-        
-    // }
 }

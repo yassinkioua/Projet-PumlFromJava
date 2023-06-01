@@ -13,6 +13,7 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
+import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
@@ -34,13 +35,21 @@ class dcaDiagram extends umlDiagram {
             super.uml += ("'https://plantuml.com/class-diagram \n skinparam classAttributeIconSize 0 \nskinparam classFontStyle Bold\nskinparam style strictuml\nhide empty members\n");
 
             ArrayList<Element> temp = new ArrayList<Element>();
-            super.uml += ("package " + classes.get(0).getEnclosingElement().getSimpleName().toString() + "{\n" );
             for (Element element : classes) {
+
+                if(element.getEnclosingElement().getSimpleName() != super.currentPackage){
+                    if(super.currentPackage != null){
+                        super.uml += "\n}\n";
+                    }
+                    super.uml += super.openPackage(element);
+                    super.currentPackage = element.getEnclosingElement().getSimpleName();
+                }
 
                 super.uml += processClass(element);
                 temp.addAll(element.getEnclosedElements());
                
                     for (Element e : temp) {
+                        
                         super.uml += processInsideClass(e);
                     }
                
@@ -49,8 +58,8 @@ class dcaDiagram extends umlDiagram {
                 temp = new ArrayList<Element>();
 
             }
-            super.uml +=("}\n");
-            super.uml +=("@enduml\n");
+            super.uml += super.processLiaison();
+            super.uml +=("}\n@enduml\n");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -68,10 +77,17 @@ class dcaDiagram extends umlDiagram {
                     handleModifiers(e);
                     r += (e.getSimpleName().toString() + " : " + e.asType().toString() + "\n");
                 }
+                else {
+                    if(e.asType().toString().contains(e.getEnclosingElement().getEnclosingElement().getSimpleName().toString())){
+                        super.liaison.add((e.getEnclosingElement().getSimpleName().toString() + " - " + super.getNomSimple(e.asType()) + "\n"));
+                        return "";
+                    }
+                }
+            
             }
             return r;
         } catch (Exception x) {
-            return "CATCHED ERROR";
+            return "CATCHED ERROR IN PROCESS INSIDE CLASS \n";
         }
     }
 }

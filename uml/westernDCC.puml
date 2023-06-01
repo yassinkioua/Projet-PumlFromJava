@@ -4,145 +4,46 @@
 skinparam classFontStyle Bold
 skinparam style strictuml
 hide empty members
-class Cowboy{ 
-- gains : int
-+ <<Create>> Cowboy(java.lang.String)
-+ <<Create>> Cowboy(java.lang.String,western.Boisson)
-+ getPseudo() : String 
-+ liberer(western.Dame)
-+ liberer(java.util.List<western.Dame>)
-+ capturer(western.HorsLaLoi)
-+ tirerSur(western.HorsLaLoi)
-+ sePresenter()
-+ getBoissonParDefaut() : western.Boisson
-+ setBoissonParDefaut(western.Boisson)
-
- } 
-class Brigand{ 
-- recompense : int
-- estLibre : boolean
-+ <<Create>> Brigand(java.lang.String)
-+ <<Create>> Brigand(java.lang.String,western.Boisson)
-+ <<Create>> Brigand(java.lang.String,western.Boisson,java.lang.String)
-+ getLook() : String 
-+ getRecompense() : int
-+ estLibre() : boolean
-+ kidnapper(western.Dame)
-+ seFaireCapturer(western.Cowboy)
-+ seFaireTirerDessus(western.Cowboy)
-+ getPseudo() : String 
-+ getCaptives() : java.util.List<western.Dame>
-+ sePresenter()
-+ getBoissonParDefaut() : western.Boisson
-+ setBoissonParDefaut(western.Boisson)
-
- } 
-class Dame{ 
-- estLibre : boolean
-+ <<Create>> Dame(java.lang.String)
-+ <<Create>> Dame(java.lang.String,western.Boisson)
-+ getPseudo() : String 
-+ seFaireKidnapper(western.HorsLaLoi)
-+ seFaireLiberer(western.Cowboy)
-+ estLibre() : boolean
-+ sePresenter()
-+ getBoissonParDefaut() : western.Boisson
-+ setBoissonParDefaut(western.Boisson)
-+ getRavisseur() : western.HorsLaLoi
-
- } 
-class Boisson{ 
-+ <<Create>> Boisson(java.lang.String,western.Genre)
-+ getNom() : String 
-+ getGenre() : western.Genre
-+ getNomAvecArticleIndefini() : String 
-+ getNomAvecArticlePartitif() : String 
-+ getNomAvecArticleDefini() : String 
-+ getNomAvecPreposition(java.lang.String) : String 
-
- } 
+package western{
 class Histoire4{ 
-+ <<Create>> Histoire4()
-+ main(java.lang.String[])
-
- } 
-class Narrateur{ 
-+ <<Create>> Narrateur()
-+ <<Create>> Narrateur(java.lang.String)
-+ dire(java.lang.String)
-+ boire(western.Boisson)
-+ boire()
-+ getPseudo() : String 
-
- } 
-class Ripou{ 
-+ <<Create>> Ripou(java.lang.String)
-+ <<Create>> Ripou(java.lang.String,western.Boisson)
-+ <<Create>> Ripou(java.lang.String,western.Boisson,java.lang.String)
-+ getLook() : String 
-+ estLibre() : boolean
-+ getRecompense() : int
-+ kidnapper(western.Dame)
-+ getCaptives() : java.util.List<western.Dame>
-+ seFaireCapturer(western.Cowboy)
-+ seFaireTirerDessus(western.Cowboy)
-+ getPseudo() : String 
-+ sePresenter()
-+ liberer(western.Dame)
-
- } 
-class Substantif{ 
-+ <<Create>> Substantif(java.lang.String,western.Genre)
-+ getNom() : String 
-+ getGenre() : western.Genre
-+ toString() : String 
-+ isVowel(char) : boolean
-+ startsWithVowel(java.lang.String) : boolean
-+ getArticleIndefini() : String 
-+ avecArticleIndefini() : String 
-+ getArticleDefini(western.Genre) : String 
-+ getArticleDefini() : String 
-+ avecArticleDefini() : String 
-+ faireElision(java.lang.String) : String 
-+ elision() : boolean
-+ getArticlePartitif() : String 
-+ avecArticlePartitif() : String 
-+ avecElision(java.lang.String) : String 
-+ avecPreposition(java.lang.String) : String 
 
  } 
 enum Genre <<enum>> { 
-+ values() : western.Genre[]
-+ valueOf(java.lang.String) : western.Genre
-- <<Create>> Genre()
-
- } 
-interface Nommable <<interface>> { 
-+ getNom() : String 
-+ getPseudo() : String 
-
- } 
-abstract class Personnage{ 
-+ <<Create>> Personnage(java.lang.String)
-+ <<Create>> Personnage(java.lang.String,western.Boisson)
-+ dire(java.lang.String)
-+ sePresenter()
-+ boire(western.Boisson)
-+ boire()
-+ getNom() : String 
-+ getBoisson() : western.Boisson
-+ getPseudos(java.util.List<? extends western.Nommable>) : String 
-+ getBoissonParDefaut() : western.Boisson
 
  } 
 interface HorsLaLoi <<interface>> { 
-+ estLibre() : boolean
-+ getRecompense() : int
-+ kidnapper(western.Dame)
-+ seFaireCapturer(western.Cowboy)
-+ seFaireTirerDessus(western.Cowboy)
-+ getLook() : String 
-+ getCaptives() : java.util.List<western.Dame>
 
  } 
+class Cowboy{ 
+gains : int
+
+ } 
+interface Nommable <<interface>> { 
+
+ } 
+class Ripou{ 
+
+ } 
+class Dame{ 
+estLibre : boolean
+
+ } 
+class Substantif{ 
+
+ } 
+class Narrateur{ 
+
+ } 
+abstract class Personnage{ 
+
+ } 
+class Brigand{ 
+recompense : int
+estLibre : boolean
+
+ } 
+class Boisson{ 
+
+ } 
+}
 @enduml
