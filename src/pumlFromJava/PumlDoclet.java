@@ -142,17 +142,17 @@ public class PumlDoclet implements Doclet {
         String filepath = d + "/" + out;
         
         try {
-            umlDiagram dcD = new umlDiagram() {};
+            umlDiagram dcD = new umlDiagram(classes) {};
             
             if(umlType == "DCA"){
-                dcD = new dcaDiagram();
+                dcD = new dcaDiagram(classes);
                 
             }
             else if(umlType =="DCC"){
-                dcD = new dccDiagram();
+                dcD = new dccDiagram(classes);
             }
             FileWriter fw = new FileWriter(filepath);
-            fw.write(dcD.generatePuml(classes, d, out));
+            fw.write(dcD.generatePuml(d, out));
             fw.close();
         } catch (IOException e) {
             // TODO Auto-generated catch block

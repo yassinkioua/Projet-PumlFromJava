@@ -36,12 +36,14 @@ abstract public class umlDiagram {
     protected String uml = "";
     protected Name currentPackage = null;
     protected ArrayList<String> liaison;
+    protected ArrayList<Element> classes;
 
-    public umlDiagram() {
-        liaison = new ArrayList<>();
+    public umlDiagram(ArrayList<Element> classes) {
+        this.liaison = new ArrayList<>();
+        this.classes = classes;
     }
 
-    protected String generatePuml(ArrayList<Element> classes, String d, String out) {
+    protected String generatePuml(String d, String out) {
         return uml;
     }
 
@@ -131,6 +133,7 @@ abstract public class umlDiagram {
 
         String[] nom = tm.toString().split("\\.");
         res = nom[nom.length-1];
+
         if(res.endsWith(">")){
             res = res.substring(0, res.length()-1);
         }
@@ -188,6 +191,15 @@ abstract public class umlDiagram {
         return r;
     }
 
+    protected boolean isCustomType(TypeMirror tm){
+        boolean r = false;
+        for (Element e : classes) {
+            if(classes.toString().contains(getNomSimple(tm))){
+                r = true;
+            }
+        }
+        return r;
+    }
 
 }
 

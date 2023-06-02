@@ -27,8 +27,11 @@ import java.util.Set;
 import java.io.FileWriter;
 
 class dcaDiagram extends umlDiagram {
+    public dcaDiagram(ArrayList<Element> classes){
+        super(classes);
+    }
     @Override
-    public String generatePuml(ArrayList<Element> classes, String d, String out) {
+    public String generatePuml(String d, String out) {
 
         try {
             super.uml += ("@startuml\n");

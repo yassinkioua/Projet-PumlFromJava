@@ -29,17 +29,19 @@ import java.util.Locale;
 import java.util.Set;
 
 public class dccDiagram extends umlDiagram {
-
+    public dccDiagram(ArrayList<Element> classes){
+        super(classes);
+    }
     @Override
-    protected String generatePuml(ArrayList<Element> classes, String d, String out) {
+    protected String generatePuml(String d, String out) {
 
         try {
             super.uml += "@startuml\n";
             super.uml +="'https://plantuml.com/class-diagram \n skinparam classAttributeIconSize 0 \nskinparam classFontStyle Bold\nskinparam style strictuml\nhide empty members\n";
-
+            
             ArrayList<Element> temp = new ArrayList<Element>();
             //parcourt les classe dans la liste classes
-            for (Element element : classes) {
+            for (Element element : super.classes) {
                 //traite la gestion des package
                 if(element.getEnclosingElement().getSimpleName() != super.currentPackage){
                     if(super.currentPackage != null){
@@ -92,7 +94,9 @@ public class dccDiagram extends umlDiagram {
                     r += (e.getSimpleName().toString() + " : " + e.asType().toString() + "\n");
                 }
                 else {
-                    if(e.asType().toString().contains(e.getEnclosingElement().getEnclosingElement().getSimpleName().toString())){
+                    // isCustomType(e.asType());
+
+                    if(isCustomType(e.asType())){
                         super.liaison.add((e.getEnclosingElement().getSimpleName().toString() + " - " + super.getNomSimple(e.asType()) + "\n"));
                         return "";
                     }
@@ -110,7 +114,7 @@ public class dccDiagram extends umlDiagram {
             
             else if (e.getKind() == ElementKind.METHOD) {
                 r += handleModifiers(e);
-                // System.out.println(e.asType());
+                
                 if (e.asType().toString().endsWith("java.lang.String")) {
                   
                     r += (super.getNameWithParams(e) + " : " + super.getNomSimple(e.asType())+"\n");
