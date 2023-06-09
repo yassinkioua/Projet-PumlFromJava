@@ -1,19 +1,27 @@
 @startuml
-'https://plantuml.com/class-diagram
-skinparam classAttributeIconSize 0
+'https://plantuml.com/class-diagram 
+ skinparam classAttributeIconSize 0 
 skinparam classFontStyle Bold
 skinparam style strictuml
 hide empty members
+package pumlFromJava{
+class dcaDiagram extends umlDiagram{ 
 
-class PumlDoclet
-class dccDiagram
-class Java2Puml
-class dcaDiagram
-'enum PumlType
+ } 
+class PumlDoclet implements Doclet{ 
 
-Java2Puml " 1\t" --> "\t1" PumlDoclet : appelle à l'aide de javadoc >
-PumlDoclet " 1\t" --> "\t1" dcaDiagram  : envoie une liste d'élement du package \n<<use>>
-PumlDoclet " 1\t" --> "\t1" dccDiagram : envoie une liste d'éledu package > \n <<use>>
+ } 
+class FirstDoclet implements Doclet{ 
 
+ } 
+class Java2Puml{ 
 
+ } 
+abstract class umlDiagram{ 
+
+ } 
+class dccDiagram extends umlDiagram{ 
+
+ } 
+}
 @enduml

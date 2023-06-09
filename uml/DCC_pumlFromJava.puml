@@ -1,50 +1,84 @@
 @startuml
-'https://plantuml.com/class-diagram
- skinparam classAttributeIconSize 0
+'https://plantuml.com/class-diagram 
+ skinparam classAttributeIconSize 0 
 skinparam classFontStyle Bold
 skinparam style strictuml
 hide empty members
+package pumlFromJava{
+class dcaDiagram extends umlDiagram{ 
++ <<Create>> dcaDiagram(classes : Element[*])
++ generatePuml(d : String[*], out : String[*]) : String[*]
+# handleLiaison(source : String[*], target : String[*], label : String[*], card : String[*]) : String[*]
+# processInsideClass(e : Element[*]) : String[*]
 
-class dcaDiagram{
-<<Create>> dcaDiagram()
-+ generatePuml(ArrayList<Element> classes,String : d,String : out) : String
-# processInsideClass(Element : e) : String
-}
-
-class dccDiagram{
-# String : uml
-+ <<Create>> dccDiagram()
-# generatePuml(ArrayList<Element> classes,String : d,String : out) : String
-# processInsideClass(Element : e) : String
-# handleModifiers(Element : e) : String
-# processClass(Element : e) : String
- }
-
-
-
-class PumlDoclet{
+ } 
+class PumlDoclet implements Doclet{ 
 + <<Create>> PumlDoclet()
-+ init(Locale : locale,Reporter : reporter)
-+ getName() : String
-+ getSupportedOptions() : Set<? extends Option>
-+ getSupportedSourceVersion() : SourceVersion
-+ run(DocletEnvironment : environement) : boolean
+- out : String[*]
+- d : String[*]
+- umlType : String[*]
+- options : PumlDoclet.Option[*]{READ ONLY}
++ init(locale : Locale[*], reporter : Reporter[*]) : void
++ getName() : String[*]
++ getSupportedOptions() : ? extends pumlFromJava.PumlDoclet.Option[*]
++ getSupportedSourceVersion() : SourceVersion[*]
++ run(environment : DocletEnvironment[*]) : boolean
 
- }
+ } 
+class FirstDoclet implements Doclet{ 
++ <<Create>> FirstDoclet()
++ init(locale : Locale[*], reporter : Reporter[*]) : void
++ getName() : String[*]
++ getSupportedOptions() : ? extends jdk.javadoc.doclet.Doclet.Option[*]
++ getSupportedSourceVersion() : SourceVersion[*]
++ run(environment : DocletEnvironment[*]) : boolean
+- dumpElement(element : Element[*]) : void
 
-class Java2Puml{
+ } 
+class Java2Puml{ 
 + <<Create>> Java2Puml()
-+ main(String[])
- }
+- {static} umlType : String[*]
++ {static} main(args : String[*]) : void
 
-'enum PumlType <<enum>> {
-'  DCA
-'  DCC
-'}
+ } 
+abstract class umlDiagram{ 
+# uml : String[*]
+# currentPackage : Name[*]
+# liaison : String[*]
+# classes : Element[*]
+# currentClasse : Element[*]
++ <<Create>> umlDiagram(classes : Element[*])
+# generatePuml(d : String[*], out : String[*]) : String[*]
+# processInsideClass(e : Element[*]) : String[*]
+# handleModifiers(e : Element[*]) : String[*]
+- handleVisibilty(visi : Modifier[*]) : String[*]
+# handleFinal(e : Element[*]) : String[*]
+# processClass(e : Element[*]) : String[*]
+# processLiaison() : String[*]
+# openPackage(e : Element[*]) : String[*]
+# getNomSimple(tm : TypeMirror[*]) : String[*]
+# getParams(e : Element[*]) : String[*]
+# getNameWithParams(e : Element[*]) : String[*]
+# handleObjectTitle(s : String[*], e : Element[*]) : String[*]
+# isCustomType(tm : TypeMirror[*]) : boolean
+# isComposition(e : Element[*]) : boolean
+# handleLiaison(source : String[*], target : String[*], label : String[*], card : String[*]) : String[*]
+# isBoxedPrimitiveType(type : TypeMirror[*]) : boolean
+# getDeepType(tm : TypeMirror[*]) : TypeMirror[*]
+# isMultipleArray(tm : TypeMirror[*]) : boolean
+# removeBracket(type : String[*]) : String[*]
+# rework_type(type : String[*]) : String[*]
+# rework_Integer(type : String[*]) : String[*]
+# rework_Real(type : String[*]) : String[*]
+# rework_String(type : String[*]) : String[*]
 
-Java2Puml " 1\t" --> "\t1" PumlDoclet : appelle à l'aide de javadoc >
-PumlDoclet " 1\t" --> "\t1" dcaDiagram  : envoie une liste d'élement du package \n<<use>>
-PumlDoclet " 1\t" --> "\t1" dccDiagram : envoie une liste d'éledu package > \n <<use>>
+ } 
+class dccDiagram extends umlDiagram{ 
++ <<Create>> dccDiagram(classes : Element[*])
+# generatePuml(d : String[*], out : String[*]) : String[*]
+# processInsideClass(e : Element[*]) : String[*]
+# handleLiaison(source : String[*], target : String[*], label : String[*], card : String[*]) : String[*]
 
+ } 
+}
 @enduml
-
