@@ -14,7 +14,8 @@ public class Java2Puml
         String umlType = "DCC";
 
        
-        String[] argument = {"-private","-sourcepath", "./exemples","-doclet" ,"pumlFromJava.PumlDoclet","-d","./uml","-out","westernDCA.puml","-umlType",umlType,"-docletpath" ,"","western" } ;
+        // String[] argument = {"-private","-sourcepath", "./exemples","-doclet" ,"pumlFromJava.PumlDoclet","-d","./uml","-out","westernDCA.puml","-umlType",umlType,"-docletpath" ,"","western" } ;
+        String[] argument = {"-private","-sourcepath", "./","-doclet" ,"pumlFromJava.PumlDoclet","-d","./uml","-out","testDCA.puml","-umlType",umlType,"-docletpath" ,"","test" } ;
         //String[] argument = {"-private","-sourcepath", "./src","-doclet" ,"pumlFromJava.PumlDoclet","-d","./uml","-docletpath" ,"","pumlFromJava" } ;
         ToolProvider toolProvider = ToolProvider.findFirst("javadoc").get();
         System.out.println(toolProvider.name());

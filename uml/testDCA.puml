@@ -1,0 +1,97 @@
+@startuml
+'https://plantuml.com/class-diagram 
+ skinparam classAttributeIconSize 0 
+skinparam classFontStyle Bold
+skinparam style strictuml
+hide empty members
+package test{
+abstract class B{ 
+~ <<Create>> B()
+- anInteger : Integer
+# aShort : Integer
+~ aLong : Integer
++ aByte : Integer
+- aFloat : Real{READ ONLY}
+# {static} aDouble : Real
+~ {static} aCharacter : String{READ ONLY}
++ {static} aBoolean : Boolean{READ ONLY}
+- anIntFunction(anIntParam : Integer[*]) : Integer[*]
+# aShortFunction(aShortParam : Integer[*]) : Integer[*]
+~ aLongFunction(aLongParam : Integer[*]) : Integer[*]
++ aByteFunction(aByteParam : Integer[*]) : Integer[*]
+- aFloatFunction(aFloatParam : Real[*]) : Real[*]
+# {abstract} aDoubleFunction(aDoubleParam : Real[*]) : Real[*]
+~ {static} aCharacterFunction(aCharacterParam : String[*]) : String[*]
++ {static} aBooleanFunction(aBooleanParam : Boolean[*]) : Boolean[*]
+
+ } 
+class A{ 
+~ <<Create>> A()
+- anInt : Integer
+# aShort : Integer
+~ aLong : Integer
++ aByte : Integer
+- aFloat : Real{READ ONLY}
+# {static} aDouble : Real
+~ {static} aChar : String{READ ONLY}
++ {static} aBoolean : boolean{READ ONLY}
+- anIntFunction(anIntParam : Integer) : Integer
+# aShortFunction(aShortParam : Integer) : Integer
+~ aLongFunction(aLongParam : Integer) : Integer
++ aByteFunction(aByteParam : Integer) : Integer
+- {static} aFloatFunction(aFloatParam : Real) : Real
+# {static} aDoubleFunction(aDoubleParam : Real) : Real
+~ {static} aCharFunction(aCharParam : String) : String
++ {static} aBooleanFunction(aBooleanParam : boolean) : boolean
+
+ } 
+abstract class E{ 
+~ <<Create>> E()
+- mapOfInt : Integer[*]
+~ mapOfDoubleArray : Real[*]
+- mapOfIntFunction(a0 : Integer[*], a1 : Integer[*], a2 : Integer[*], a3 : Integer[*]) : Integer[*]
+~ {abstract} mapOfDoubleArrayFunction(a0 : Real[*], a1 : Real[*], a2 : Real[*], a3 : Real[*]) : Real[*]
+# mapOfAFunction(a0 : A[*], a1 : A[*], a2 : A[*], a3 : A[*]) : A[*]
++ {static} mapOfArrayOfAFunction(a0 : A[*], a1 : A[*], a2 : A[*], a3 : A[*]) : A[*]
+
+ } 
+class C{ 
+~ <<Create>> C()
+- anIntArray : Integer[*]
+# aShortArray : Integer[*]
+~ anArrayOfLongArray : Integer[*]
++ anArrayOfByteArray : Integer[*]
+- aFloatList : Real[*]{READ ONLY}
+# {static} aListOfDoubleList : Real[*]
+~ {static} aSetOfCharacter : String[*]{READ ONLY}
++ {static} aSetOfBooleanList : Boolean[*]{READ ONLY}
+- anIntArrayFunction(anIntArrayParam : Integer[*]) : Integer[*]
+# aShortArrayFunction(aShortArrayParam : Integer[*]) : Integer[*]
+~ aLong3DArrayFunction(someLongs : Integer[*]) : Integer[*]
++ aByte5DArrayFunction(someBytes : Integer[*]) : Integer[*]
+- aFloatListFunction(aFloatListParam : Real[*]) : Real[*]
+# aListOfDoubleListFunction(someDoubles : Real[*]) : Real[*]
+~ aCharacterSetFunction(aCharacterSetParam : String[*]) : String[*]
++ aSetOfBooleanListFunction(someBooleans : Boolean[*]) : Boolean[*]
+
+ } 
+abstract class D{ 
+~ <<Create>> D()
+- aFunction(a0 : A[*], a1 : A[*], a2 : A[*], a3 : A[*]) : A[*]
+~ bFunction(b0 : B[*], b1 : B[*], b2 : B[*], b3 : B[*]) : B[*]
+# {abstract} cFunction(c0 : C[*], c1 : C[*], c2 : C[*], c3 : C[*]) : C[*]
++ {static} dFunction(d0 : D[*], d1 : D[*], d2 : D[*], d3 : D[*], d4 : D[*]) : D[*]
+
+ } 
+class Java2PumlTest1{ 
++ <<Create>> Java2PumlTest1()
+
+ } 
+E o--> A
+E o--> A
+D o--> A
+D o--> B
+D o--> C
+D o--> D
+}
+@enduml

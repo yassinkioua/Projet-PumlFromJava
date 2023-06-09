@@ -15,7 +15,9 @@ import javax.lang.model.element.Element;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -23,6 +25,7 @@ public class PumlDoclet implements Doclet {
     private String out = null; 
     private String d = null;
     private String umlType = null;
+
 
 
     abstract class Option implements Doclet.Option {
@@ -132,11 +135,14 @@ public class PumlDoclet implements Doclet {
         if(d == null){
             d = ".";
         }
+        
+
         for (Element element : environment.getSpecifiedElements()) {
             if(out == null){
                 out = element.getSimpleName().toString() + ".puml";
             }
             classes.addAll(element.getEnclosedElements());
+            
             
         } 
         String filepath = d + "/" + out;
@@ -152,8 +158,13 @@ public class PumlDoclet implements Doclet {
                 dcD = new dccDiagram(classes);
             }
             FileWriter fw = new FileWriter(filepath);
+            
+        
+        
+
             fw.write(dcD.generatePuml(d, out));
             fw.close();
+            
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

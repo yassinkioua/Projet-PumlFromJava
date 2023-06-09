@@ -1,0 +1,167 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam style strictuml
+hide empty members
+
+class Boisson
+{
+    + <<Create>> Boisson(nom: String, genre: Genre)
+    + getNom() : String
+    + getGenre(): Genre
+    + getNomAvecArticleIndefini() : String
+    + getNomAvecArticlePartitif() : String
+    + getNomAvecArticleDefini() : String
+    + getNomAvecPreposition(preposition: String) : String
+}
+
+class Substantif
+{
+    - nom: String
+    + <<Create>> Substantif(nom: String, genre: Genre)
+    + getNom(): String
+    + getGenre(): Genre
+    + getArticleDefini(genre: Genre) : String {static}
+    + getArticleDefini(): String
+    + avecArticleDefini(): String
+    + getArticleIndefini(): String
+    + avecArticleIndefini(): String
+    + getArticlePartitif(): String
+    + avecArticlePartitif(): String
+    + avecPreposition(preposition: String): String
+}
+
+enum Genre <<enum>>
+{
+    FEMININ
+    MASCULIN
+}
+
+Personnage "*" o---> "1\n-boisson\n\n" Boisson : Préfère >
+Personnage o---> "1\n<u>+ BOISSON_PAR_DEFAUT</u>\n" Boisson : Préfère >
+
+Boisson " 1  " o---> "1\n-substantif" Substantif : Désigne <
+Substantif " *   " o---> "1\n-genre" Genre : Possède >
+
+Cowboy o---> "1\n<u>+ BOISSON_PAR_DEFAUT</u>" Boisson : Préfère >
+Dame o---> "1\n<u>+ BOISSON_PAR_DEFAUT</u>" Boisson : Préfère >
+Brigand o---> "1\n<u>+ BOISSON_PAR_DEFAUT</u>\n" Boisson : Préfère >
+
+Boisson *--> "\t1\n\t<u>EAU</u>" Boisson
+
+abstract class Personnage
+{
+    - nom: String
+    + <<Create>> Personnage(nom: String)
+    + <<Create>> Personnage(nom: String, boisson: Boisson)
+    + getNom(): String
+    + {abstract} getPseudo(): String
+    + getBoisson(): Boisson
+    + dire(texte: String)
+    + sePresenter()
+    + boire()
+    + boire(boisson: Boisson)
+    + {static} getPseudos(personnage: Personnage *): String
+    + {static} getBoissonParDefaut(): Boisson
+}
+
+class Dame extends Personnage
+{
+    - estLibre: Boolean
+    + <<Create>> Dame(nom: String)
+    + <<Create>> Dame(nom: String, boisson: Boisson)
+    + estLibre(): Boolean
+    + getPseudo(): String {redefines Personnage::getPseudo}
+    + seFaireKidnapper(horsLaLoi: HorsLaLoi)
+    + seFaireLiberer(cowboy: Cowboy)
+    + {static} getBoissonParDefaut(): Boisson
+    + {static} setBoissonParDefaut(boisson: Boisson)
+    + sePresenter() {redefines Personnage::sePresenter}
+    + getRavisseur() : HorsLaLoi
+}
+
+class Brigand extends Personnage implements HorsLaLoi
+{
+    - look: String
+    - recompense: Integer
+    - estLibre: Boolean
+    + <<Create>> Brigand(nom: String)
+    + <<Create>> Brigand(nom: String, boisson: Boisson)
+    + <<Create>> Brigand(nom: String, boisson: Boisson, look: String)
+    + getRecompense(): Integer
+    + estLibre(): Boolean
+    + getLook(): String
+    + getPseudo(): String {redefines Personnage::getPseudo}
+    + kidnapper(dame: Dame)
+    + getCaptives(): Dame[*]
+    + seFaireCapturer(cowboy: Cowboy)
+    + seFaireTirerDessus(cowboy: Cowboy)
+    + {static} getBoissonParDefaut(): Boisson
+    + {static} setBoissonParDefaut(boisson: Boisson)
+    - {static} LOOK_PAR_DEFAUT: String = "le méchant"
+    + sePresenter() {redefines Personnage::sePresenter}
+}
+
+class Cowboy extends Personnage
+{
+    - gains: Integer
+    + <<Create>> Cowboy(nom: String)
+    + <<Create>> Cowboy(nom: String, boisson: Boisson)
+    + getPseudo(): String {redefines Personnage::getPseudo}
+    + liberer(dame: Dame)
+    + liberer(dame: Dame[*])
+    + capturer(horsLaLoi: HorsLaLoi)
+    + tirerSur(horsLaLoi: HorsLaLoi)
+    + {static} getBoissonParDefaut(): Boisson
+    + {static} setBoissonParDefaut(boisson: Boisson)
+    + sePresenter() {redefines Personnage::sePresenter}
+}
+
+class Narrateur extends Personnage
+{
+    + <<Create>> Narrateur()
+    + getPseudo(): String {redefines Personnage::getPseudo}
+    + dire(texte: String) {redefines Personnage::dire}
+    + boire() {redefines Personnage::boire()}
+    + boire(boisson: Boisson) {redefines Personnage::boire(Boisson)}
+}
+
+class Ripou extends Cowboy implements HorsLaLoi
+{
+    + <<Create>> Ripou(nom: String)
+    + <<Create>> Ripou(nom: String, boisson: Boisson)
+    + <<Create>> Ripou(nom: String, boisson: Boisson, look: String)
+    + estLibre(): Boolean {redefines HorsLaLoi::estLibre}
+    + getRecompense(): Integer {redefines HorsLaLoi::getRecompense}
+    + getLook(): String {redefines HorsLaLoi::getLook}
+    + kidnapper(dame: Dame) {redefines HorsLaLoi::kidnapper}
+    + getCaptives(): Dame[*] {redefines HorsLaLoi::getCaptives}
+    + seFaireCapturer(cowboy: Cowboy) {redefines HorsLaLoi::seFaireCapturer}
+    + seFaireTirerDessus(cowboy: Cowboy) {redefines HorsLaLoi::seFaireTirerDessus}
+    + getPseudo(): String {redefines Cowboy::getPseudo}
+    + sePresenter() {redefines Cowboy::sePresenter}
+    + liberer(dame: Dame) {redefines Cowboy::liberer}
+}
+
+interface HorsLaLoi <<interface>>
+{
+    + estLibre(): Boolean {abstract}
+    + getRecompense(): Integer {abstract}
+    + getLook(): String {abstract}
+    + kidnapper(dame: Dame) {abstract}
+    + getCaptives(): Dame[*] {abstract}
+    + seFaireCapturer(cowboy: Cowboy) {abstract}
+    + seFaireTirerDessus(cowboy: Cowboy) {abstract}
+}
+
+Cowboy "1\n-sauveur" <-o "*" Dame : Délivre\t\t\t\t >
+Dame o--> "1\n-ravisseur" HorsLaLoi : \nKidnappe  <
+Cowboy o--> "\t*\n-captures" HorsLaLoi : Capture >
+Cowboy "\t1\n-gardien" <--o Brigand : Capture >
+Dame "*\n-captives" <--o Brigand : \nKidnappe  <
+
+Ripou *-> "1\n-brigand" Brigand : \tEst_un\t\t >
+
+
+@enduml

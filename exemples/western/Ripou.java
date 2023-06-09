@@ -5,7 +5,7 @@ import java.util.List;
 public class Ripou extends Cowboy implements HorsLaLoi
 {
     private Brigand brigand;
-
+    
     public Ripou(String nom)
     {
         super(nom, getBoissonParDefaut());

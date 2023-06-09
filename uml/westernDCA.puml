@@ -6,158 +6,58 @@ skinparam style strictuml
 hide empty members
 package western{
 class Histoire4{ 
-+ <<Create>> Histoire4()
-+ {static} main(args : String[])
 
  } 
 enum Genre <<enum>> { 
-FEMININ
-MASCULIN
 
  } 
 interface HorsLaLoi implements Nommable{ 
-<<interface>>+ {abstract} estLibre() : boolean
-+ {abstract} getRecompense() : int
-+ {abstract} kidnapper(dame : Dame)
-+ {abstract} seFaireCapturer(cowBoy : Cowboy)
-+ {abstract} seFaireTirerDessus(cowBoy : Cowboy)
-+ {abstract} getLook() : String
-+ {abstract} getCaptives() : Dame
-
+<<interface>>
  } 
 class Cowboy extends Personnage{ 
-- gains : int
-+ <<Create>> Cowboy(nom : String)
-+ <<Create>> Cowboy(nom : String, boisson : Boisson)
-+ getPseudo() : String
-+ liberer(dame : Dame)
-+ liberer(captives : Dame)
-+ capturer(horsLaLoi : HorsLaLoi)
-+ tirerSur(brigand : HorsLaLoi)
-+ sePresenter()
-+ {static} getBoissonParDefaut() : Boisson
-+ {static} setBoissonParDefaut(boisson : Boisson)
+gains : int
 
  } 
 interface Nommable{ 
-<<interface>>+ {abstract} getNom() : String
-+ {abstract} getPseudo() : String
-
+<<interface>>
  } 
 class Ripou extends Cowboy implements HorsLaLoi{ 
-+ <<Create>> Ripou(nom : String)
-+ <<Create>> Ripou(nom : String, boisson : Boisson)
-+ <<Create>> Ripou(nom : String, boisson : Boisson, look : String)
-+ getLook() : String
-+ estLibre() : boolean
-+ getRecompense() : int
-+ kidnapper(dame : Dame)
-+ getCaptives() : Dame
-+ seFaireCapturer(cowBoy : Cowboy)
-+ seFaireTirerDessus(cowBoy : Cowboy)
-+ getPseudo() : String
-+ sePresenter()
-+ liberer(dame : Dame)
 
  } 
 class Dame extends Personnage{ 
-- estLibre : boolean
-+ <<Create>> Dame(nom : String)
-+ <<Create>> Dame(nom : String, boisson : Boisson)
-+ getPseudo() : String
-+ seFaireKidnapper(horsLaLoi : HorsLaLoi)
-+ seFaireLiberer(cowBoy : Cowboy)
-+ estLibre() : boolean
-+ sePresenter()
-+ {static} getBoissonParDefaut() : Boisson
-+ {static} setBoissonParDefaut(boisson : Boisson)
-+ getRavisseur() : HorsLaLoi
+estLibre : boolean
 
  } 
 class Substantif{ 
-+ <<Create>> Substantif(nom : String, genre : Genre)
-+ getNom() : String
-+ getGenre() : Genre
-+ toString() : String
-+ {static} isVowel(c : char) : boolean
-+ {static} startsWithVowel(s : String) : boolean
-+ getArticleIndefini() : String
-+ avecArticleIndefini() : String
-+ {static} getArticleDefini(genre : Genre) : String
-+ getArticleDefini() : String
-+ avecArticleDefini() : String
-+ {static} faireElision(article : String) : String
-+ elision() : boolean
-+ getArticlePartitif() : String
-+ avecArticlePartitif() : String
-+ avecElision(article : String) : String
-+ avecPreposition(preposition : String) : String
 
  } 
 class Narrateur extends Personnage{ 
-+ <<Create>> Narrateur()
-+ <<Create>> Narrateur(nom : String)
-+ dire(texte : String)
-+ boire(boisson : Boisson)
-+ boire()
-+ getPseudo() : String
 
  } 
 abstract class Personnage implements Nommable{ 
-+ <<Create>> Personnage(nom : String)
-+ <<Create>> Personnage(nom : String, boisson : Boisson)
-+ dire(texte : String)
-+ sePresenter()
-+ boire(boisson : Boisson)
-+ boire()
-+ getNom() : String
-+ getBoisson() : Boisson
-+ {static} getPseudos(personnages : Nommable) : String
-+ {static} getBoissonParDefaut() : Boisson
 
  } 
 class Brigand extends Personnage implements HorsLaLoi{ 
-- recompense : int
-- estLibre : boolean
-+ <<Create>> Brigand(nom : String)
-+ <<Create>> Brigand(nom : String, boisson : Boisson)
-+ <<Create>> Brigand(nom : String, boisson : Boisson, look : String)
-+ getLook() : String
-+ getRecompense() : int
-+ estLibre() : boolean
-+ kidnapper(dame : Dame)
-+ seFaireCapturer(cowBoy : Cowboy)
-+ seFaireTirerDessus(cowBoy : Cowboy)
-+ getPseudo() : String
-+ getCaptives() : Dame
-+ sePresenter()
-+ {static} getBoissonParDefaut() : Boisson
-+ {static} setBoissonParDefaut(boisson : Boisson)
+recompense : int
+estLibre : boolean
 
  } 
 class Boisson{ 
-+ <<Create>> Boisson(nom : String, genre : Genre)
-+ getNom() : String
-+ getGenre() : Genre
-+ getNomAvecArticleIndefini() : String
-+ getNomAvecArticlePartitif() : String
-+ getNomAvecArticleDefini() : String
-+ getNomAvecPreposition(preposition : String) : String
 
  } 
-Cowboy - HorsLaLoi
-Cowboy - Boisson
-Ripou - Brigand
-Dame - Cowboy
-Dame - HorsLaLoi
-Dame - Boisson
-Substantif - Genre
-Personnage - Boisson
-Personnage - Boisson
-Brigand - Dame
-Brigand - Cowboy
-Brigand - Boisson
-Boisson - Substantif
-Boisson - Boisson
+Cowboy o--> HorsLaLoi
+Cowboy o--> Boisson
+Ripou o--> Brigand
+Dame o--> Cowboy
+Dame o--> HorsLaLoi
+Dame o--> Boisson
+Substantif o--> Genre
+Personnage o--> Boisson
+Personnage o--> Boisson
+Brigand o--> Dame
+Brigand o--> Cowboy
+Brigand o--> Boisson
+Boisson o--> Substantif
+Boisson*->Boisson
 }
 @enduml
