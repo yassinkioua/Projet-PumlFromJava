@@ -74,9 +74,9 @@ class dcaDiagram extends umlDiagram {
     }
 
     @Override
-    protected String handleLiaison(String source, String target) {
+    protected String handleLiaison(String source, String target,String label,String card) {
         String r = "";
-        String label = "";
+        
 
         r += source + "-" + target + "\n";
 
@@ -100,7 +100,7 @@ class dcaDiagram extends umlDiagram {
                 else if (e.asType() instanceof ArrayType) {
 
                     if(isCustomType(getDeepType(e.asType()))){
-                        liaison.add(handleLiaison(currentClasse.getSimpleName().toString(), getNomSimple(getDeepType(e.asType()))));
+                        liaison.add(handleLiaison(currentClasse.getSimpleName().toString(), getNomSimple(getDeepType(e.asType())),null,null));
                     }
                     else{                        
                         r += (e.getSimpleName().toString() + "\n");
@@ -112,13 +112,13 @@ class dcaDiagram extends umlDiagram {
                         r += (e.getSimpleName().toString() + "\n");
                      }
                      else if (isCustomType(getDeepType(e.asType()))) {
-                        liaison.add(handleLiaison(currentClasse.getSimpleName().toString(), getNomSimple(getDeepType(e.asType()))));
+                        liaison.add(handleLiaison(currentClasse.getSimpleName().toString(), getNomSimple(getDeepType(e.asType())),null,null));
                      }
                  
                 } 
                 else if (isCustomType(e.asType())) {
                         super.liaison.add(handleLiaison(e.getEnclosingElement().getSimpleName().toString(),
-                                getNomSimple(e.asType())));
+                                getNomSimple(e.asType()),null,null));
                         return "";
                     }
 

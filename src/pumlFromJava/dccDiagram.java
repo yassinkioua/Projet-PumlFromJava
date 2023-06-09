@@ -107,7 +107,7 @@ public class dccDiagram extends umlDiagram {
                 else if (elementType instanceof ArrayType) {
 
                     if(isCustomType(elementDeepType)){
-                        liaison.add(handleLiaison(currentClasse.getSimpleName().toString(), getNomSimple(elementDeepType)));
+                        liaison.add(handleLiaison(currentClasse.getSimpleName().toString(), getNomSimple(elementDeepType),e.getSimpleName().toString(),"*"));
                     }
                                           
                     else{
@@ -121,7 +121,7 @@ public class dccDiagram extends umlDiagram {
 
                 else if (elementType instanceof DeclaredType) {
                     if (isCustomType(elementDeepType)) {
-                        liaison.add(handleLiaison(currentClasse.getSimpleName().toString(), getNomSimple(elementDeepType)));
+                        liaison.add(handleLiaison(currentClasse.getSimpleName().toString(), getNomSimple(elementDeepType),e.getSimpleName().toString(),"*"));
                     }
                     else{
                         r += handleModifiers(e);
@@ -133,7 +133,7 @@ public class dccDiagram extends umlDiagram {
 
                 else if (isCustomType(elementType)) {
                         super.liaison.add(handleLiaison(e.getEnclosingElement().getSimpleName().toString(),
-                                getNomSimple(elementType)));
+                                getNomSimple(elementType),e.getSimpleName().toString(),""));
                         return "";
                     }
                 }
@@ -169,11 +169,11 @@ public class dccDiagram extends umlDiagram {
     }
 
     @Override
-    protected String handleLiaison(String source, String target) {
+    protected String handleLiaison(String source, String target,String label,String card) {
         String r="";
-        String label = "" ;
         
-        r += source + " o--> " + target + "\n";
+        r += source + " --o" +" \" " +card+ " "+ label+" \""+ target + "\n";
+        //  A --o " * \t caca" B
         
             
 

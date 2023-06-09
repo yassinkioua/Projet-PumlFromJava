@@ -87,11 +87,11 @@ class Java2PumlTest1{
 + <<Create>> Java2PumlTest1()
 
  } 
-E o--> A
-E o--> A
-D o--> A
-D o--> B
-D o--> C
-D o--> D
+E --o " * mapOfA "A
+E --o " * mapOfArrayOfA "A
+D --o " * a "A
+D --o " * bs "B
+D --o " * cs "C
+D --o " * ds "D
 }
 @enduml

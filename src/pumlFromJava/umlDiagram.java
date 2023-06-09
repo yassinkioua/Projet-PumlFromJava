@@ -270,7 +270,7 @@ abstract public class umlDiagram {
         return r;
     }
 
-    protected String handleLiaison(String source, String target) {
+    protected String handleLiaison(String source, String target,String label,String card) {
         return "";
     }
 
